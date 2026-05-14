@@ -4,21 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>De la Costa al Café — Brayan & Valeria</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:         #080808;
-      --bg2:        #111111;
-      --bg3:        #1A1A1A;
-      --gold:       #C9A84C;
-      --gold-light: #E8C96B;
-      --gold-dim:   rgba(201,168,76,0.15);
-      --gold-border:rgba(201,168,76,0.25);
-      --white:      #F2EDE4;
-      --muted:      #6B6560;
-      --muted2:     #3A3530;
+      --bg:          #070707;
+      --bg2:         #0F0F0F;
+      --bg3:         #171717;
+      --bg4:         #1E1E1E;
+      --gold:        #C9A84C;
+      --gold-l:      #E8C96B;
+      --gold-xl:     #F5DFA0;
+      --gold-d:      #8B6520;
+      --gold-dim:    rgba(201,168,76,0.10);
+      --gold-border: rgba(201,168,76,0.22);
+      --white:       #F0EAE0;
+      --muted:       #5A5550;
+      --muted2:      #2A2520;
+      --radius:      20px;
     }
 
     html { scroll-behavior: smooth; }
@@ -31,271 +35,177 @@
       overflow-x: hidden;
     }
 
-    /* ── GRAIN OVERLAY ── */
-    body::before {
+    /* grain */
+    body::after {
       content: '';
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
       pointer-events: none;
-      z-index: 9999;
-      opacity: 0.4;
+      z-index: 9998;
+      opacity: 0.35;
     }
 
     /* ── NAV ── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.25rem 3rem;
-      background: rgba(8,8,8,0.85);
-      backdrop-filter: blur(20px);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(7,7,7,0.88);
+      backdrop-filter: blur(24px);
       border-bottom: 1px solid var(--gold-border);
     }
 
     .nav-logo {
       font-family: 'Space Mono', monospace;
-      font-size: 0.8rem;
+      font-size: 0.72rem;
       color: var(--gold);
       letter-spacing: 3px;
       text-transform: uppercase;
     }
 
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
-
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
     .nav-links a {
       text-decoration: none;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 500;
       color: var(--muted);
       letter-spacing: 1.5px;
       text-transform: uppercase;
       transition: color 0.2s;
     }
-
     .nav-links a:hover { color: var(--gold); }
 
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       align-items: center;
-      justify-content: center;
       position: relative;
       overflow: hidden;
-      padding: 6rem 2rem 4rem;
+      padding: 7rem 3rem 4rem;
+      gap: 3rem;
     }
 
-    .hero-bg {
+    /* watermark */
+    .hero-wm {
       position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,0.07) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(10rem, 22vw, 20rem);
+      font-weight: 900;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(201,168,76,0.07);
+      white-space: nowrap;
+      user-select: none;
+      pointer-events: none;
+      letter-spacing: -0.02em;
     }
 
-    .hero-lines {
+    /* radial glow */
+    .hero::before {
+      content: '';
       position: absolute;
-      inset: 0;
+      top: 30%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse, rgba(201,168,76,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* grid lines */
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0;
       background-image:
-        linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
+        linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
     }
 
-    .hero-content {
-      position: relative;
-      text-align: center;
-      max-width: 900px;
-    }
+    .hero-left { position: relative; z-index: 1; }
 
-    .hero-eyebrow {
+    .hero-tag {
       display: inline-flex;
       align-items: center;
       gap: 0.75rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 2rem;
-    }
-
-    .hero-eyebrow::before,
-    .hero-eyebrow::after {
-      content: '';
-      width: 40px;
-      height: 1px;
-      background: var(--gold);
-      opacity: 0.5;
-    }
-
-    .hero-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(3.5rem, 9vw, 7rem);
-      font-weight: 700;
-      line-height: 0.95;
-      margin-bottom: 0.5rem;
-      color: var(--white);
-    }
-
-    .hero-title em {
-      font-style: italic;
-      color: var(--gold);
-    }
-
-    .hero-subtitle {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: clamp(1.2rem, 3vw, 1.8rem);
-      color: var(--muted);
-      margin-bottom: 2.5rem;
-    }
-
-    .hero-meta {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--muted);
-      letter-spacing: 2px;
-      margin-bottom: 3.5rem;
-    }
-
-    .hero-meta span { color: var(--gold-light); }
-    .hero-meta .dot {
-      width: 4px; height: 4px;
-      border-radius: 50%;
-      background: var(--muted2);
-    }
-
-    .hero-pills {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .pill {
-      border: 1px solid var(--gold-border);
-      background: var(--gold-dim);
-      padding: 0.5rem 1.25rem;
-      border-radius: 50px;
-      font-size: 0.78rem;
-      color: var(--gold-light);
-      font-weight: 500;
-      letter-spacing: 0.5px;
-    }
-
-    .hero-scroll {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--muted);
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-
-    .hero-scroll::after {
-      content: '';
-      width: 1px;
-      height: 50px;
-      background: linear-gradient(to bottom, var(--gold), transparent);
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 1; }
-    }
-
-    /* ── SECTION BASE ── */
-    section { padding: 6rem 2rem; }
-    .container { max-width: 1100px; margin: 0 auto; }
-
-    .s-label {
       font-family: 'Space Mono', monospace;
       font-size: 0.68rem;
       letter-spacing: 4px;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+      margin-bottom: 1.75rem;
     }
+    .hero-tag::before { content: ''; width: 32px; height: 1px; background: var(--gold); opacity: 0.5; }
 
-    .s-label::after {
-      content: '';
-      flex: 0 0 40px;
-      height: 1px;
-      background: var(--gold);
-      opacity: 0.4;
-    }
-
-    .s-title {
+    .hero-h1 {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 700;
-      color: var(--white);
-      line-height: 1.15;
-      margin-bottom: 0.75rem;
+      font-size: clamp(3.5rem, 6vw, 5.5rem);
+      font-weight: 900;
+      line-height: 0.95;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
     }
 
-    .s-sub {
-      font-size: 0.9rem;
+    .hero-h1 .line2 {
+      font-style: italic;
+      color: var(--gold);
+      display: block;
+    }
+
+    .hero-names {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
       color: var(--muted);
-      max-width: 500px;
-      margin-bottom: 3.5rem;
-    }
-
-    /* ── BOARDING PASSES ── */
-    #vuelos { background: var(--bg); }
-
-    .passes-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+      letter-spacing: 2px;
       margin-bottom: 2.5rem;
     }
+    .hero-names strong { color: var(--gold-l); }
 
-    .boarding-pass {
-      display: grid;
-      grid-template-columns: 1fr auto 200px;
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .pill {
+      border: 1px solid var(--gold-border);
+      background: var(--gold-dim);
+      padding: 0.45rem 1rem;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      color: var(--gold-l);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    /* hero right: flight card */
+    .hero-right { position: relative; z-index: 1; }
+
+    .hero-flight-card {
       background: var(--bg2);
       border: 1px solid var(--gold-border);
-      border-radius: 16px;
+      border-radius: var(--radius);
+      padding: 2rem;
+      position: relative;
       overflow: hidden;
-      transition: transform 0.25s, box-shadow 0.25s;
     }
 
-    .boarding-pass:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 40px rgba(201,168,76,0.1);
+    .hero-flight-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(201,168,76,0.025) 4px, rgba(201,168,76,0.025) 8px),
+        repeating-linear-gradient(-45deg, transparent, transparent 4px, rgba(201,168,76,0.025) 4px, rgba(201,168,76,0.025) 8px);
+      pointer-events: none;
     }
 
-    .bp-main {
-      padding: 2rem 2.5rem;
-    }
-
-    .bp-tipo {
+    .hfc-label {
       font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--gold);
@@ -304,88 +214,69 @@
       align-items: center;
       gap: 0.5rem;
     }
+    .hfc-label::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: blink 2s ease-in-out infinite; }
 
-    .bp-tipo::before {
-      content: '';
-      width: 6px; height: 6px;
-      background: var(--gold);
-      border-radius: 50%;
-    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-    .bp-ruta {
+    /* route display */
+    .hfc-route {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
-      margin-bottom: 1.75rem;
+      gap: 1rem;
+      margin-bottom: 2rem;
     }
 
-    .bp-aeropuerto {}
+    .hfc-port {}
 
-    .bp-code {
+    .hfc-code {
       font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-      font-weight: 700;
+      font-size: 3.2rem;
+      font-weight: 900;
       line-height: 1;
       color: var(--white);
     }
 
-    .bp-city {
-      font-size: 0.72rem;
+    .hfc-city {
+      font-size: 0.68rem;
       color: var(--muted);
-      margin-top: 0.2rem;
       letter-spacing: 0.5px;
+      margin-top: 0.2rem;
     }
 
-    .bp-arrow {
+    .hfc-mid {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.3rem;
     }
 
-    .bp-arrow-line {
+    .hfc-path {
       width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 0;
+      height: 40px;
     }
 
-    .bp-arrow-line::before,
-    .bp-arrow-line::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--muted2);
-    }
-
-    .bp-arrow-icon {
-      font-size: 0.9rem;
-      color: var(--gold);
-      padding: 0 0.5rem;
-    }
-
-    .bp-dur {
+    .hfc-dur {
       font-family: 'Space Mono', monospace;
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       color: var(--muted);
       letter-spacing: 1px;
     }
 
-    .bp-parada {
-      font-size: 0.65rem;
+    .hfc-stops {
+      font-size: 0.62rem;
       color: var(--gold);
-      letter-spacing: 0.5px;
     }
 
-    .bp-details {
-      display: flex;
-      gap: 2.5rem;
+    .hfc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
     }
 
-    .bp-detail label {
+    .hfc-item label {
       font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--muted);
@@ -393,27 +284,421 @@
       margin-bottom: 0.3rem;
     }
 
-    .bp-detail value {
-      font-size: 0.92rem;
+    .hfc-item value {
+      font-size: 0.88rem;
       font-weight: 600;
       color: var(--white);
     }
 
-    /* Tear line */
-    .bp-tear {
-      width: 1px;
-      background: repeating-linear-gradient(
-        to bottom,
-        var(--muted2) 0px,
-        var(--muted2) 6px,
-        transparent 6px,
-        transparent 12px
-      );
+    .hfc-price-badge {
+      margin-top: 1.5rem;
+      background: var(--gold);
+      border-radius: 10px;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hfc-price-badge p {
+      font-size: 0.72rem;
+      color: rgba(0,0,0,0.6);
+      font-weight: 500;
+    }
+
+    .hfc-price-badge strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: #070707;
+      font-weight: 700;
+    }
+
+    /* scroll */
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem; left: 3rem;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--muted);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .hero-scroll::before {
+      content: '';
+      width: 50px; height: 1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      animation: expand 2s ease-in-out infinite;
+    }
+
+    @keyframes expand { 0%,100%{width:30px;opacity:0.4} 50%{width:60px;opacity:1} }
+
+    /* ── SECTION BASE ── */
+    section { padding: 7rem 2rem; }
+    .container { max-width: 1140px; margin: 0 auto; }
+
+    .s-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .s-label::after { content: ''; flex: 0 0 36px; height: 1px; background: var(--gold); opacity: 0.4; }
+
+    .s-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+    }
+
+    .s-sub { font-size: 0.88rem; color: var(--muted); max-width: 480px; margin-bottom: 3.5rem; }
+
+    /* diagonal divider */
+    .diagonal-top {
+      clip-path: polygon(0 4%, 100% 0, 100% 100%, 0 100%);
+      margin-top: -3rem;
+      padding-top: 10rem;
+    }
+
+    .diagonal-both {
+      clip-path: polygon(0 4%, 100% 0, 100% 96%, 0 100%);
+      margin-top: -3rem;
+      margin-bottom: -3rem;
+      padding-top: 10rem;
+      padding-bottom: 10rem;
+    }
+
+    /* ── LOS VIAJEROS ── */
+    #viajeros { background: var(--bg2); }
+
+    .viajeros-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .viajero-card {
+      background: var(--bg3);
+      border: 1px solid var(--muted2);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
       position: relative;
     }
 
-    .bp-tear::before,
-    .bp-tear::after {
+    .viajero-card:hover {
+      border-color: var(--gold-border);
+      transform: translateY(-4px);
+    }
+
+    .viajero-photo {
+      height: 320px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .viajero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.5s ease;
+      filter: brightness(0.8) saturate(0.9);
+    }
+
+    .viajero-card:hover .viajero-photo img { transform: scale(1.04); }
+
+    .viajero-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(7,7,7,0.95) 0%, rgba(7,7,7,0.3) 50%, transparent 100%);
+    }
+
+    .viajero-badge {
+      position: absolute;
+      top: 1.25rem; right: 1.25rem;
+      background: rgba(7,7,7,0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--gold-border);
+      border-radius: 50px;
+      padding: 0.35rem 0.9rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 2px;
+      color: var(--gold);
+    }
+
+    .viajero-body {
+      padding: 1.75rem;
+    }
+
+    .viajero-nombre {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 0.25rem;
+    }
+
+    .viajero-meta {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+    }
+
+    .viajero-meta span { color: var(--gold-l); }
+
+    .viajero-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .viajero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .viajero-tag {
+      border: 1px solid var(--muted2);
+      padding: 0.3rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      color: var(--muted);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .viajero-card:hover .viajero-tag {
+      border-color: var(--gold-border);
+      color: var(--gold-l);
+    }
+
+    /* ── LA RUTA ── */
+    #ruta { background: var(--bg); }
+
+    .ruta-wrap {
+      background: var(--bg2);
+      border: 1px solid var(--gold-border);
+      border-radius: var(--radius);
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ruta-wrap::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(201,168,76,0.02) 5px, rgba(201,168,76,0.02) 10px);
+      pointer-events: none;
+    }
+
+    .ruta-vuelos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .ruta-vuelo {
+      background: var(--bg3);
+      border: 1px solid var(--muted2);
+      border-radius: 14px;
+      padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .ruta-vuelo:hover { border-color: var(--gold-border); }
+
+    .ruta-vuelo-tipo {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .ruta-vuelo-ports {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .rvp-code {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--white);
+    }
+
+    .rvp-city {
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    .rvp-mid {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .rvp-line {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+
+    .rvp-dur {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+    }
+
+    .rvp-icon {
+      font-size: 0.8rem;
+      color: var(--gold);
+    }
+
+    .ruta-vuelo-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .rvu-detail label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .rvu-detail value {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .rvu-precio {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* ── BOARDING PASSES ── */
+    #vuelos { background: var(--bg2); }
+
+    .passes-wrap { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2.5rem; }
+
+    .boarding-pass {
+      display: grid;
+      grid-template-columns: 1fr auto 190px;
+      background: var(--bg3);
+      border: 1px solid var(--gold-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+      position: relative;
+    }
+
+    .boarding-pass::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(201,168,76,0.018) 5px, rgba(201,168,76,0.018) 10px),
+        repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(201,168,76,0.018) 5px, rgba(201,168,76,0.018) 10px);
+      pointer-events: none;
+    }
+
+    .boarding-pass:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 50px rgba(201,168,76,0.09);
+    }
+
+    .bp-main { padding: 2rem 2.5rem; position: relative; }
+
+    .bp-tipo {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .bp-tipo::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+
+    .bp-ruta { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.75rem; }
+
+    .bp-code {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--white);
+    }
+    .bp-city { font-size: 0.68rem; color: var(--muted); margin-top: 0.2rem; }
+
+    .bp-arrow {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .bp-arrow-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+    .bp-arrow-row::before,
+    .bp-arrow-row::after { content: ''; flex: 1; height: 1px; background: var(--muted2); }
+
+    .bp-arrow-icon { padding: 0 0.5rem; color: var(--gold); font-size: 0.9rem; }
+    .bp-dur { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--muted); }
+    .bp-stop { font-size: 0.6rem; color: var(--gold); }
+
+    .bp-details { display: flex; gap: 2.5rem; }
+    .bp-detail label { font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.25rem; }
+    .bp-detail value { font-size: 0.88rem; font-weight: 600; color: var(--white); }
+
+    .bp-tear {
+      width: 1px;
+      background: repeating-linear-gradient(to bottom, var(--muted2) 0, var(--muted2) 6px, transparent 6px, transparent 12px);
+      position: relative;
+    }
+    .bp-tear::before, .bp-tear::after {
       content: '';
       position: absolute;
       left: 50%;
@@ -421,80 +706,40 @@
       width: 18px; height: 18px;
       border-radius: 50%;
       background: var(--bg);
-      border: 1px solid var(--gold-border);
     }
-
     .bp-tear::before { top: -9px; }
     .bp-tear::after { bottom: -9px; }
 
-    /* Stub */
     .bp-stub {
       padding: 2rem 1.75rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      background: var(--bg3);
+      background: var(--bg4);
+      position: relative;
     }
 
-    .bp-stub-top label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 2px;
-      color: var(--muted);
-      text-transform: uppercase;
-      display: block;
-      margin-bottom: 0.4rem;
-    }
-
-    .bp-stub-top value {
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--white);
-      display: block;
-      margin-bottom: 1rem;
-    }
+    .bp-stub-top label { font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; display: block; margin-bottom: 0.35rem; }
+    .bp-stub-top value { font-size: 0.82rem; font-weight: 600; color: var(--white); display: block; margin-bottom: 0.9rem; }
 
     .bp-qr {
-      width: 60px; height: 60px;
+      width: 55px; height: 55px;
+      border: 1px solid var(--muted2);
+      border-radius: 4px;
+      margin-bottom: 0.9rem;
       background:
         repeating-linear-gradient(0deg, var(--muted2) 0, var(--muted2) 2px, transparent 2px, transparent 6px),
         repeating-linear-gradient(90deg, var(--muted2) 0, var(--muted2) 2px, transparent 2px, transparent 6px);
-      border: 1px solid var(--muted2);
-      border-radius: 4px;
-      margin-bottom: 1rem;
     }
 
-    .bp-precio {
-      border-top: 1px solid var(--muted2);
-      padding-top: 1rem;
-    }
+    .bp-precio { border-top: 1px solid var(--muted2); padding-top: 0.9rem; }
+    .bp-precio label { font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; display: block; margin-bottom: 0.3rem; }
+    .bp-precio value { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--gold); }
+    .bp-precio small { font-size: 0.65rem; color: var(--muted); }
 
-    .bp-precio label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 2px;
-      color: var(--muted);
-      text-transform: uppercase;
-      display: block;
-      margin-bottom: 0.3rem;
-    }
-
-    .bp-precio value {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--gold);
-      font-family: 'Playfair Display', serif;
-    }
-
-    .bp-precio small {
-      font-size: 0.7rem;
-      color: var(--muted);
-    }
-
-    /* Total strip */
     .vuelo-total {
       background: var(--gold);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 1.25rem 2rem;
       display: flex;
       justify-content: space-between;
@@ -502,261 +747,244 @@
       flex-wrap: wrap;
       gap: 1rem;
     }
-
-    .vuelo-total-left p {
-      font-size: 0.78rem;
-      color: rgba(0,0,0,0.6);
-      font-weight: 500;
-    }
-
-    .vuelo-total-left strong {
-      font-size: 0.88rem;
-      color: #080808;
-      font-weight: 700;
-    }
-
-    .vuelo-total-right {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      font-weight: 700;
-      color: #080808;
-    }
+    .vuelo-total p { font-size: 0.78rem; color: rgba(0,0,0,0.6); font-weight: 500; }
+    .vuelo-total strong { font-size: 0.88rem; color: #070707; font-weight: 700; }
+    .vuelo-total-price { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: #070707; }
 
     /* ── PRESUPUESTO ── */
-    #presupuesto { background: var(--bg2); }
+    #presupuesto { background: var(--bg); }
 
     .budget-layout {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      align-items: start;
+      grid-template-columns: auto 1fr;
+      gap: 4rem;
+      align-items: center;
     }
 
-    @media (max-width: 750px) {
-      .budget-layout { grid-template-columns: 1fr; }
+    /* donut SVG */
+    .donut-wrap {
+      position: relative;
+      width: 260px; height: 260px;
+      flex-shrink: 0;
     }
 
-    .budget-table {
-      background: var(--bg3);
-      border: 1px solid var(--gold-border);
-      border-radius: 16px;
-      overflow: hidden;
+    .donut-wrap svg { transform: rotate(-90deg); }
+
+    .donut-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
     }
 
-    .budget-header {
-      background: var(--gold-dim);
-      padding: 1rem 1.5rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
+    .donut-center strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
       color: var(--gold);
-      border-bottom: 1px solid var(--gold-border);
+      line-height: 1;
     }
+
+    .donut-center span {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 0.3rem;
+    }
+
+    .budget-rows { display: flex; flex-direction: column; gap: 0.75rem; }
 
     .budget-row {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 0.85rem 1.5rem;
-      border-bottom: 1px solid var(--muted2);
-      font-size: 0.85rem;
-    }
-
-    .budget-row:last-child { border-bottom: none; }
-
-    .budget-row .concepto { color: var(--muted); }
-    .budget-row .valor { color: var(--white); font-weight: 600; font-family: 'Space Mono', monospace; font-size: 0.8rem; }
-
-    .budget-row.total-row {
-      background: var(--gold-dim);
-      border-top: 1px solid var(--gold-border);
-    }
-
-    .budget-row.total-row .concepto {
-      color: var(--gold);
-      font-weight: 700;
-      font-size: 0.9rem;
-    }
-
-    .budget-row.total-row .valor {
-      color: var(--gold);
-      font-size: 1rem;
-    }
-
-    .budget-visual {
-      display: flex;
-      flex-direction: column;
       gap: 1rem;
     }
 
-    .budget-bar-item {}
-
-    .budget-bar-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.78rem;
-      margin-bottom: 0.4rem;
+    .br-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
     }
 
-    .budget-bar-label span:first-child { color: var(--muted); }
-    .budget-bar-label span:last-child { color: var(--white); font-family: 'Space Mono', monospace; font-size: 0.72rem; }
+    .br-label {
+      flex: 1;
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
 
-    .budget-bar-track {
-      height: 6px;
+    .br-bar-track {
+      width: 120px;
+      height: 4px;
       background: var(--muted2);
       border-radius: 10px;
       overflow: hidden;
     }
 
-    .budget-bar-fill {
+    .br-bar-fill {
       height: 100%;
-      background: linear-gradient(90deg, var(--gold), var(--gold-light));
       border-radius: 10px;
-      transition: width 1s ease;
+    }
+
+    .br-value {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--white);
+      min-width: 70px;
+      text-align: right;
     }
 
     /* ── ITINERARIO ── */
-    #itinerario { background: var(--bg); }
+    #itinerario { background: var(--bg2); }
 
-    .timeline {
-      position: relative;
-      padding-left: 2.5rem;
-    }
+    .timeline { position: relative; }
 
     .timeline::before {
       content: '';
       position: absolute;
-      left: 0;
-      top: 12px;
-      bottom: 12px;
+      left: 100px;
+      top: 0; bottom: 0;
       width: 1px;
-      background: linear-gradient(to bottom, var(--gold), var(--gold-border), transparent);
+      background: linear-gradient(to bottom, var(--gold), rgba(201,168,76,0.1), transparent);
     }
 
     .tl-item {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 2.5rem;
+      margin-bottom: 3.5rem;
       position: relative;
-      margin-bottom: 3rem;
     }
-
     .tl-item:last-child { margin-bottom: 0; }
 
-    .tl-dot {
-      position: absolute;
-      left: -2.5rem;
-      top: 8px;
-      width: 14px; height: 14px;
-      border-radius: 50%;
-      border: 2px solid var(--gold);
-      background: var(--bg);
-      transform: translateX(-6px);
+    .tl-left {
+      text-align: right;
+      padding-right: 2rem;
+      padding-top: 0.4rem;
+      position: relative;
     }
 
-    .tl-dot::after {
+    .tl-left::after {
       content: '';
       position: absolute;
-      inset: 3px;
+      right: -5px; top: 10px;
+      width: 10px; height: 10px;
       border-radius: 50%;
       background: var(--gold);
+      border: 2px solid var(--bg2);
+      box-shadow: 0 0 0 3px var(--gold-border);
     }
+
+    .tl-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--gold-border);
+      line-height: 1;
+    }
+
+    .tl-dayname {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .tl-right {}
 
     .tl-header {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       gap: 1rem;
       margin-bottom: 1rem;
     }
 
-    .tl-dia {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--gold);
+    .tl-badge {
       background: var(--gold-dim);
       border: 1px solid var(--gold-border);
-      padding: 0.3rem 0.8rem;
       border-radius: 50px;
+      padding: 0.3rem 0.85rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      color: var(--gold);
     }
 
-    .tl-fecha {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
+    .tl-fecha { font-size: 0.78rem; color: var(--muted); }
 
-    .tl-titulo {
+    .tl-title {
       font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      font-weight: 600;
+      font-size: 1.35rem;
+      font-weight: 700;
       color: var(--white);
       margin-bottom: 1rem;
     }
 
-    .tl-grid {
+    .tl-cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
       gap: 0.75rem;
     }
 
-    .tl-actividad {
-      background: var(--bg2);
+    .tl-card {
+      background: var(--bg3);
       border: 1px solid var(--muted2);
-      border-radius: 10px;
-      padding: 0.85rem 1rem;
-      font-size: 0.82rem;
-      color: var(--muted);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
       display: flex;
       gap: 0.75rem;
-      align-items: flex-start;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, background 0.2s;
     }
 
-    .tl-actividad:hover { border-color: var(--gold-border); }
+    .tl-card:hover { border-color: var(--gold-border); background: var(--bg4); }
 
-    .tl-actividad .icon {
-      font-size: 1rem;
-      flex-shrink: 0;
-    }
+    .tl-card-icon { font-size: 1.1rem; flex-shrink: 0; }
 
-    .tl-actividad .text strong {
+    .tl-card-body strong {
       display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
       color: var(--white);
-      font-weight: 500;
       margin-bottom: 0.15rem;
-      font-size: 0.84rem;
     }
 
-    .tl-actividad .cost {
+    .tl-card-body p { font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
+
+    .tl-card-cost {
       font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       color: var(--gold);
       margin-top: 0.3rem;
     }
 
     /* ── LUGARES ── */
-    #lugares { background: var(--bg2); }
+    #lugares { background: var(--bg); }
 
-    .lugares-grid {
+    .lugares-featured {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1.6fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .lugares-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       gap: 1.25rem;
     }
 
-    @media (max-width: 900px) {
-      .lugares-grid { grid-template-columns: 1fr 1fr; }
-    }
-
-    @media (max-width: 600px) {
-      .lugares-grid { grid-template-columns: 1fr; }
-    }
-
     .lugar-card {
-      background: var(--bg3);
+      background: var(--bg2);
       border: 1px solid var(--muted2);
-      border-radius: 16px;
+      border-radius: var(--radius);
       overflow: hidden;
       transition: transform 0.25s, border-color 0.25s;
-      cursor: default;
     }
 
     .lugar-card:hover {
@@ -764,179 +992,169 @@
       border-color: var(--gold-border);
     }
 
-    .lugar-img {
-      height: 180px;
-      overflow: hidden;
-      background: var(--bg2);
-      position: relative;
-    }
+    .lugar-card.featured { grid-row: span 2; }
+
+    .lugar-img { overflow: hidden; position: relative; background: var(--bg3); }
+    .lugar-card.featured .lugar-img { height: 420px; }
+    .lugar-card:not(.featured) .lugar-img { height: 160px; }
+    .lugares-row .lugar-img { height: 140px; }
 
     .lugar-img img {
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.4s ease;
-      filter: brightness(0.85);
+      transition: transform 0.4s;
+      filter: brightness(0.8) saturate(0.85);
     }
 
-    .lugar-card:hover .lugar-img img { transform: scale(1.05); }
+    .lugar-card:hover .lugar-img img { transform: scale(1.06); }
 
-    .lugar-body {
-      padding: 1.25rem;
+    .lugar-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(7,7,7,0.7) 0%, transparent 60%);
     }
+
+    .lugar-body { padding: 1.1rem 1.25rem; }
+    .lugar-card.featured .lugar-body { padding: 1.5rem 1.75rem; }
 
     .lugar-tag {
       font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
 
     .lugar-body h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.05rem;
+      font-size: 1rem;
       color: var(--white);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
 
-    .lugar-body p {
-      font-size: 0.8rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
+    .lugar-card.featured .lugar-body h3 { font-size: 1.35rem; }
+
+    .lugar-body p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+    .lugar-card:not(.featured) .lugar-body p { display: none; }
+    .lugares-row .lugar-body p { display: none; }
 
     /* ── MAPA ── */
-    #ubicacion { background: var(--bg); }
+    #ubicacion { background: var(--bg2); }
 
-    .mapa-layout {
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
+    .mapa-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center; }
 
-    @media (max-width: 800px) {
-      .mapa-layout { grid-template-columns: 1fr; }
-    }
-
-    .mapa-wrap {
-      position: relative;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid var(--gold-border);
-    }
-
-    .mapa-wrap img {
-      width: 100%;
-      height: 420px;
-      object-fit: cover;
-      display: block;
-      filter: grayscale(20%) brightness(0.75) sepia(15%);
-    }
-
-    .mapa-wrap::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(8,8,8,0.6) 0%, transparent 50%);
-    }
+    .mapa-wrap { position: relative; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--gold-border); }
+    .mapa-wrap img { width: 100%; height: 420px; object-fit: cover; display: block; filter: grayscale(30%) brightness(0.65) sepia(20%); }
+    .mapa-wrap::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(7,7,7,0.7) 0%, transparent 50%); }
 
     .mapa-badge {
-      position: absolute;
-      bottom: 1.5rem;
-      left: 1.5rem;
-      z-index: 2;
-      background: rgba(8,8,8,0.85);
-      backdrop-filter: blur(10px);
+      position: absolute; bottom: 1.5rem; left: 1.5rem; z-index: 2;
+      background: rgba(7,7,7,0.82);
+      backdrop-filter: blur(12px);
       border: 1px solid var(--gold-border);
-      padding: 0.75rem 1.25rem;
-      border-radius: 10px;
+      padding: 0.85rem 1.25rem;
+      border-radius: 12px;
     }
+    .mapa-badge strong { display: block; font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--gold); }
+    .mapa-badge span { font-size: 0.72rem; color: var(--muted); }
 
-    .mapa-badge strong {
-      display: block;
-      font-family: 'Playfair Display', serif;
-      font-size: 1rem;
-      color: var(--gold);
-    }
+    .mapa-datos { display: flex; flex-direction: column; gap: 1.75rem; }
 
-    .mapa-badge span {
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
+    .mapa-dato { display: flex; gap: 1rem; align-items: flex-start; }
 
-    .mapa-datos {
-      display: flex;
-      flex-direction: column;
-      gap: 1.75rem;
-    }
-
-    .mapa-dato {
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-    }
-
-    .mapa-dato-icon {
-      width: 36px; height: 36px;
+    .mapa-icon {
+      width: 34px; height: 34px;
       border-radius: 8px;
       background: var(--gold-dim);
       border: 1px solid var(--gold-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
       flex-shrink: 0;
-      margin-top: 0.1rem;
     }
 
-    .mapa-dato label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--gold);
-      display: block;
-      margin-bottom: 0.3rem;
-    }
-
-    .mapa-dato p {
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
+    .mapa-dato label { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.25rem; }
+    .mapa-dato p { font-size: 0.85rem; color: var(--muted); }
 
     /* ── FOOTER ── */
     footer {
-      background: var(--bg2);
+      background: var(--bg);
       border-top: 1px solid var(--muted2);
-      padding: 3rem 2rem;
+      padding: 4rem 2rem 3rem;
       text-align: center;
     }
 
     .footer-title {
       font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
+      font-style: italic;
+      font-size: 2rem;
       color: var(--gold);
       margin-bottom: 0.5rem;
     }
 
-    footer p {
+    footer .footer-meta {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 2px;
+      margin-bottom: 2rem;
+    }
+
+    .footer-names {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-name {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-name-img {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--gold-border);
+    }
+
+    .footer-name-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(30%); }
+
+    .footer-name span {
       font-size: 0.78rem;
       color: var(--muted);
+      font-weight: 500;
+    }
+
+    footer .copyright {
+      font-size: 0.7rem;
+      color: var(--muted2);
       font-family: 'Space Mono', monospace;
       letter-spacing: 1px;
     }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding-top: 6rem; }
+      .hero-right { display: none; }
+      .viajeros-grid { grid-template-columns: 1fr; }
+      .ruta-vuelos { grid-template-columns: 1fr; }
+      .boarding-pass { grid-template-columns: 1fr; }
+      .bp-tear, .bp-stub { display: none; }
+      .budget-layout { grid-template-columns: 1fr; }
+      .donut-wrap { margin: 0 auto; }
+      .lugares-featured { grid-template-columns: 1fr; }
+      .lugar-card.featured { grid-row: span 1; }
+      .lugar-card.featured .lugar-img { height: 280px; }
+      .lugares-row { grid-template-columns: 1fr 1fr; }
+      .mapa-layout { grid-template-columns: 1fr; }
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
-      .boarding-pass { grid-template-columns: 1fr; }
-      .bp-tear { display: none; }
-      .bp-stub { border-top: 1px dashed var(--muted2); }
+      .timeline::before { left: 60px; }
+      .tl-item { grid-template-columns: 60px 1fr; gap: 1.5rem; }
     }
   </style>
 </head>
@@ -946,6 +1164,7 @@
   <nav>
     <div class="nav-logo">CTG × PEI — 2025</div>
     <ul class="nav-links">
+      <li><a href="#viajeros">Viajeros</a></li>
       <li><a href="#vuelos">Vuelos</a></li>
       <li><a href="#presupuesto">Presupuesto</a></li>
       <li><a href="#itinerario">Itinerario</a></li>
@@ -955,148 +1174,318 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-lines"></div>
-    <div class="hero-content">
-      <div class="hero-eyebrow">Eje Cafetero · Colombia</div>
-      <h1 class="hero-title">De la Costa<br><em>al Café</em></h1>
-      <p class="hero-subtitle">Brayan & Valeria</p>
-      <div class="hero-meta">
-        <span>18 Jun</span>
-        <div class="dot"></div>
-        <span>Cartagena → Pereira</span>
-        <div class="dot"></div>
-        <span>21 Jun</span>
-      </div>
+    <div class="hero-wm" aria-hidden="true">PEREIRA</div>
+
+    <div class="hero-left">
+      <div class="hero-tag">Eje Cafetero · Colombia</div>
+      <h1 class="hero-h1">
+        De la Costa
+        <span class="line2">al Café</span>
+      </h1>
+      <p class="hero-names"><strong>Brayan & Valeria</strong> &nbsp;·&nbsp; Cartagena → Pereira</p>
       <div class="hero-pills">
+        <div class="pill">18 – 21 Junio</div>
         <div class="pill">3 noches</div>
         <div class="pill">LATAM Airlines</div>
         <div class="pill">1.3M COP / persona</div>
-        <div class="pill">Eje Cafetero</div>
       </div>
     </div>
+
+    <div class="hero-right">
+      <div class="hero-flight-card">
+        <div class="hfc-label">Vuelo confirmado</div>
+        <div class="hfc-route">
+          <div class="hfc-port">
+            <div class="hfc-code">CTG</div>
+            <div class="hfc-city">Cartagena de Indias</div>
+          </div>
+          <div class="hfc-mid">
+            <!-- Animated flight path SVG -->
+            <svg class="hfc-path" viewBox="0 0 220 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 10 35 Q 110 5 210 35" stroke="rgba(201,168,76,0.3)" stroke-width="1" stroke-dasharray="5 4"/>
+              <text font-size="14" fill="#C9A84C" style="animation: movePlane 3s linear infinite;">
+                <textPath href="#flightPath" startOffset="50%" text-anchor="middle">✈</textPath>
+              </text>
+              <path id="flightPath" d="M 10 35 Q 110 5 210 35" fill="none"/>
+              <circle cx="10" cy="35" r="3" fill="#C9A84C" opacity="0.6"/>
+              <circle cx="210" cy="35" r="3" fill="#C9A84C" opacity="0.6"/>
+            </svg>
+            <div class="hfc-dur">3h 35min ida · 4h 40min regreso</div>
+            <div class="hfc-stops">1 parada cada trayecto</div>
+          </div>
+          <div class="hfc-port" style="text-align:right">
+            <div class="hfc-code">PEI</div>
+            <div class="hfc-city">Pereira · Matecana</div>
+          </div>
+        </div>
+        <div class="hfc-grid">
+          <div class="hfc-item">
+            <label>Ida</label>
+            <value>Jue 18 Jun · 9:25 a.m.</value>
+          </div>
+          <div class="hfc-item">
+            <label>Regreso</label>
+            <value>Dom 21 Jun · 6:55 p.m.</value>
+          </div>
+          <div class="hfc-item">
+            <label>Aerolínea</label>
+            <value>LATAM Airlines</value>
+          </div>
+          <div class="hfc-item">
+            <label>Tarifa</label>
+            <value>Basic · Equipaje de mano</value>
+          </div>
+        </div>
+        <div class="hfc-price-badge">
+          <div>
+            <p>Total por pasajero</p>
+            <p>Ambos trayectos</p>
+          </div>
+          <strong>COP 480.040</strong>
+        </div>
+      </div>
+    </div>
+
     <div class="hero-scroll">scroll</div>
   </section>
 
-  <!-- VUELOS -->
-  <section id="vuelos">
+  <!-- LOS VIAJEROS -->
+  <section id="viajeros" class="diagonal-top">
+    <div class="container">
+      <div class="s-label">Los protagonistas</div>
+      <h2 class="s-title">Los Viajeros</h2>
+      <p class="s-sub">Dos cartageneros, una mochila y muchas ganas de conocer el Eje Cafetero.</p>
+
+      <div class="viajeros-grid">
+
+        <!-- VALERIA -->
+        <div class="viajero-card">
+          <div class="viajero-photo">
+            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80&fit=crop&crop=faces" alt="Valeria Carrillo" />
+            <div class="viajero-photo-overlay"></div>
+            <div class="viajero-badge">23 años</div>
+          </div>
+          <div class="viajero-body">
+            <div class="viajero-nombre">Valeria Carrillo</div>
+            <div class="viajero-meta">
+              <span>Cartagena de Indias</span>
+              ·
+              <span>23 años</span>
+            </div>
+            <p class="viajero-desc">
+              Espontánea de pies a cabeza. Le dices "hay un plan" y ya está lista. Viaja con los ojos bien abiertos y muchas ganas de conocer gente, lugares y sabores nuevos. Su lema: si se puede, se hace.
+            </p>
+            <div class="viajero-tags">
+              <span class="viajero-tag">Espontánea</span>
+              <span class="viajero-tag">Dice sí a todo</span>
+              <span class="viajero-tag">Exploradora</span>
+              <span class="viajero-tag">Buena vibra</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- BRAYAN -->
+        <div class="viajero-card">
+          <div class="viajero-photo">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80&fit=crop&crop=faces" alt="Brayan Sierra" />
+            <div class="viajero-photo-overlay"></div>
+            <div class="viajero-badge">26 años</div>
+          </div>
+          <div class="viajero-body">
+            <div class="viajero-nombre">Brayan Sierra</div>
+            <div class="viajero-meta">
+              <span>Cartagena de Indias</span>
+              ·
+              <span>26 años</span>
+            </div>
+            <p class="viajero-desc">
+              El del plan detallado que siempre se cumple. Organizado pero con la mente abierta, no sabe decir que no a una experiencia nueva. Dispuesto a conocer lo que sea, donde sea y como sea.
+            </p>
+            <div class="viajero-tags">
+              <span class="viajero-tag">Organizado</span>
+              <span class="viajero-tag">No dice que no</span>
+              <span class="viajero-tag">Aventurero</span>
+              <span class="viajero-tag">El del plan</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- LA RUTA -->
+  <section id="ruta">
     <div class="container">
       <div class="s-label">LATAM Airlines Colombia</div>
+      <h2 class="s-title">La Ruta</h2>
+      <p class="s-sub">Dos vuelos, un destino. Cartagena a Pereira y de regreso.</p>
+
+      <div class="ruta-wrap">
+        <div class="ruta-vuelos">
+
+          <div class="ruta-vuelo">
+            <div class="ruta-vuelo-tipo">Vuelo de ida</div>
+            <div class="ruta-vuelo-ports">
+              <div>
+                <div class="rvp-code">CTG</div>
+                <div class="rvp-city">Cartagena de Indias</div>
+              </div>
+              <div class="rvp-mid">
+                <div class="rvp-icon">✈</div>
+                <div class="rvp-line"></div>
+                <div class="rvp-dur">3h 35min · 1 parada</div>
+              </div>
+              <div style="text-align:right">
+                <div class="rvp-code">PEI</div>
+                <div class="rvp-city">Pereira · Matecana</div>
+              </div>
+            </div>
+            <div class="ruta-vuelo-info">
+              <div style="display:flex;gap:2rem">
+                <div class="rvu-detail">
+                  <label>Fecha</label>
+                  <value>Jue 18 Junio 2025</value>
+                </div>
+                <div class="rvu-detail">
+                  <label>Sale</label>
+                  <value>9:25 a.m.</value>
+                </div>
+                <div class="rvu-detail">
+                  <label>Llega</label>
+                  <value>1:00 p.m.</value>
+                </div>
+              </div>
+              <div class="rvu-precio">COP 236.758</div>
+            </div>
+          </div>
+
+          <div class="ruta-vuelo">
+            <div class="ruta-vuelo-tipo">Vuelo de regreso</div>
+            <div class="ruta-vuelo-ports">
+              <div>
+                <div class="rvp-code">PEI</div>
+                <div class="rvp-city">Pereira · Matecana</div>
+              </div>
+              <div class="rvp-mid">
+                <div class="rvp-icon">✈</div>
+                <div class="rvp-line"></div>
+                <div class="rvp-dur">4h 40min · 1 parada</div>
+              </div>
+              <div style="text-align:right">
+                <div class="rvp-code">CTG</div>
+                <div class="rvp-city">Cartagena de Indias</div>
+              </div>
+            </div>
+            <div class="ruta-vuelo-info">
+              <div style="display:flex;gap:2rem">
+                <div class="rvu-detail">
+                  <label>Fecha</label>
+                  <value>Dom 21 Junio 2025</value>
+                </div>
+                <div class="rvu-detail">
+                  <label>Sale</label>
+                  <value>6:55 p.m.</value>
+                </div>
+                <div class="rvu-detail">
+                  <label>Llega</label>
+                  <value>11:35 p.m.</value>
+                </div>
+              </div>
+              <div class="rvu-precio">COP 243.282</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOARDING PASSES -->
+  <section id="vuelos" class="diagonal-top">
+    <div class="container">
+      <div class="s-label">Tiquetes</div>
       <h2 class="s-title">Boarding Passes</h2>
       <p class="s-sub">Tarifa Basic · bolso de mano incluido · sin reembolso</p>
 
       <div class="passes-wrap">
 
-        <!-- IDA -->
         <div class="boarding-pass">
           <div class="bp-main">
             <div class="bp-tipo">Vuelo de ida</div>
             <div class="bp-ruta">
-              <div class="bp-aeropuerto">
+              <div>
                 <div class="bp-code">CTG</div>
-                <div class="bp-city">Cartagena de Indias</div>
+                <div class="bp-city">Cartagena</div>
               </div>
               <div class="bp-arrow">
-                <div class="bp-arrow-line">
-                  <div class="bp-arrow-icon">✈</div>
-                </div>
+                <div class="bp-arrow-row"><div class="bp-arrow-icon">✈</div></div>
                 <div class="bp-dur">3h 35min</div>
-                <div class="bp-parada">1 parada</div>
+                <div class="bp-stop">1 parada</div>
               </div>
-              <div class="bp-aeropuerto" style="text-align:right">
+              <div style="text-align:right">
                 <div class="bp-code">PEI</div>
-                <div class="bp-city">Pereira · Matecana</div>
+                <div class="bp-city">Pereira</div>
               </div>
             </div>
             <div class="bp-details">
-              <div class="bp-detail">
-                <label>Fecha</label>
-                <value>Jue 18 Junio 2025</value>
-              </div>
-              <div class="bp-detail">
-                <label>Sale</label>
-                <value>9:25 a.m.</value>
-              </div>
-              <div class="bp-detail">
-                <label>Llega</label>
-                <value>1:00 p.m.</value>
-              </div>
-              <div class="bp-detail">
-                <label>Tarifa</label>
-                <value>Basic</value>
-              </div>
+              <div class="bp-detail"><label>Fecha</label><value>Jue 18 Jun 2025</value></div>
+              <div class="bp-detail"><label>Sale</label><value>9:25 a.m.</value></div>
+              <div class="bp-detail"><label>Llega</label><value>1:00 p.m.</value></div>
+              <div class="bp-detail"><label>Clase</label><value>Basic</value></div>
             </div>
           </div>
           <div class="bp-tear"></div>
           <div class="bp-stub">
             <div class="bp-stub-top">
-              <label>Pasajeros</label>
-              <value>Brayan & Valeria</value>
-              <label>Aerolínea</label>
-              <value>LATAM Airlines</value>
+              <label>Pasajeros</label><value>Brayan & Valeria</value>
+              <label>Aerolínea</label><value>LATAM Airlines</value>
               <div class="bp-qr"></div>
             </div>
             <div class="bp-precio">
               <label>Por pasajero</label>
-              <value>COP 236.758</value>
-              <br><small>Tarifa sin reembolso</small>
+              <value>COP 236.758</value><br>
+              <small>Sin reembolso</small>
             </div>
           </div>
         </div>
 
-        <!-- REGRESO -->
         <div class="boarding-pass">
           <div class="bp-main">
             <div class="bp-tipo">Vuelo de regreso</div>
             <div class="bp-ruta">
-              <div class="bp-aeropuerto">
+              <div>
                 <div class="bp-code">PEI</div>
-                <div class="bp-city">Pereira · Matecana</div>
+                <div class="bp-city">Pereira</div>
               </div>
               <div class="bp-arrow">
-                <div class="bp-arrow-line">
-                  <div class="bp-arrow-icon">✈</div>
-                </div>
+                <div class="bp-arrow-row"><div class="bp-arrow-icon">✈</div></div>
                 <div class="bp-dur">4h 40min</div>
-                <div class="bp-parada">1 parada</div>
+                <div class="bp-stop">1 parada</div>
               </div>
-              <div class="bp-aeropuerto" style="text-align:right">
+              <div style="text-align:right">
                 <div class="bp-code">CTG</div>
-                <div class="bp-city">Cartagena de Indias</div>
+                <div class="bp-city">Cartagena</div>
               </div>
             </div>
             <div class="bp-details">
-              <div class="bp-detail">
-                <label>Fecha</label>
-                <value>Dom 21 Junio 2025</value>
-              </div>
-              <div class="bp-detail">
-                <label>Sale</label>
-                <value>6:55 p.m.</value>
-              </div>
-              <div class="bp-detail">
-                <label>Llega</label>
-                <value>11:35 p.m.</value>
-              </div>
-              <div class="bp-detail">
-                <label>Tarifa</label>
-                <value>Basic</value>
-              </div>
+              <div class="bp-detail"><label>Fecha</label><value>Dom 21 Jun 2025</value></div>
+              <div class="bp-detail"><label>Sale</label><value>6:55 p.m.</value></div>
+              <div class="bp-detail"><label>Llega</label><value>11:35 p.m.</value></div>
+              <div class="bp-detail"><label>Clase</label><value>Basic</value></div>
             </div>
           </div>
           <div class="bp-tear"></div>
           <div class="bp-stub">
             <div class="bp-stub-top">
-              <label>Pasajeros</label>
-              <value>Brayan & Valeria</value>
-              <label>Aerolínea</label>
-              <value>LATAM Airlines</value>
+              <label>Pasajeros</label><value>Brayan & Valeria</value>
+              <label>Aerolínea</label><value>LATAM Airlines</value>
               <div class="bp-qr"></div>
             </div>
             <div class="bp-precio">
               <label>Por pasajero</label>
-              <value>COP 243.282</value>
-              <br><small>Tarifa sin reembolso</small>
+              <value>COP 243.282</value><br>
+              <small>Sin reembolso</small>
             </div>
           </div>
         </div>
@@ -1104,11 +1493,11 @@
       </div>
 
       <div class="vuelo-total">
-        <div class="vuelo-total-left">
+        <div>
           <strong>Total vuelos por pasajero</strong>
-          <p>Ida + regreso · Tarifa Basic · LATAM Airlines Colombia</p>
+          <p>Ida + regreso · LATAM Airlines Colombia</p>
         </div>
-        <div class="vuelo-total-right">COP 480.040</div>
+        <div class="vuelo-total-price">COP 480.040</div>
       </div>
     </div>
   </section>
@@ -1118,328 +1507,186 @@
     <div class="container">
       <div class="s-label">Por persona</div>
       <h2 class="s-title">Presupuesto</h2>
-      <p class="s-sub">Desglose completo de los 1.300.000 COP por persona, todo incluido.</p>
+      <p class="s-sub">1.300.000 COP por persona, todo incluido desde Cartagena.</p>
 
       <div class="budget-layout">
-        <div class="budget-table">
-          <div class="budget-header">Desglose de gastos</div>
-          <div class="budget-row">
-            <span class="concepto">Vuelos ida + regreso</span>
-            <span class="valor">480.040</span>
-          </div>
-          <div class="budget-row">
-            <span class="concepto">Hospedaje 3 noches (Airbnb entre 2)</span>
-            <span class="valor">180.000</span>
-          </div>
-          <div class="budget-row">
-            <span class="concepto">Comidas (4 días)</span>
-            <span class="valor">200.000</span>
-          </div>
-          <div class="budget-row">
-            <span class="concepto">Transporte local (Uber + buses)</span>
-            <span class="valor">153.000</span>
-          </div>
-          <div class="budget-row">
-            <span class="concepto">Termales Santa Rosa (sábado)</span>
-            <span class="valor">77.000</span>
-          </div>
-          <div class="budget-row">
-            <span class="concepto">Tour finca cafetera</span>
-            <span class="valor">60.000</span>
-          </div>
-          <div class="budget-row">
-            <span class="concepto">Valle del Cocora (miradores)</span>
-            <span class="valor">30.000</span>
-          </div>
-          <div class="budget-row">
-            <span class="concepto">Souvenirs e imprevistos</span>
-            <span class="valor">119.960</span>
-          </div>
-          <div class="budget-row total-row">
-            <span class="concepto">Total por persona</span>
-            <span class="valor">1.300.000</span>
+
+        <!-- Donut SVG -->
+        <div class="donut-wrap">
+          <svg width="260" height="260" viewBox="0 0 260 260">
+            <!-- track -->
+            <circle cx="130" cy="130" r="100" fill="none" stroke="#1E1E1E" stroke-width="28"/>
+            <!-- Vuelos 37% = 628.3 * 0.37 = 232.5 -->
+            <circle cx="130" cy="130" r="100" fill="none" stroke="#C9A84C" stroke-width="28"
+              stroke-dasharray="232.5 628.3" stroke-dashoffset="0" stroke-linecap="butt"/>
+            <!-- Comidas 15.4% = 96.75 offset -232.5 -->
+            <circle cx="130" cy="130" r="100" fill="none" stroke="#E8C96B" stroke-width="28"
+              stroke-dasharray="96.8 628.3" stroke-dashoffset="-232.5" stroke-linecap="butt"/>
+            <!-- Hospedaje 13.8% = 86.7 offset -329.3 -->
+            <circle cx="130" cy="130" r="100" fill="none" stroke="#8B6520" stroke-width="28"
+              stroke-dasharray="86.7 628.3" stroke-dashoffset="-329.3" stroke-linecap="butt"/>
+            <!-- Transporte 11.8% = 74.1 offset -416 -->
+            <circle cx="130" cy="130" r="100" fill="none" stroke="#A07830" stroke-width="28"
+              stroke-dasharray="74.1 628.3" stroke-dashoffset="-416" stroke-linecap="butt"/>
+            <!-- Termales 5.9% = 37.1 offset -490.1 -->
+            <circle cx="130" cy="130" r="100" fill="none" stroke="#D4A843" stroke-width="28"
+              stroke-dasharray="37.1 628.3" stroke-dashoffset="-490.1" stroke-linecap="butt"/>
+            <!-- Actividades + extras 15.1% = 94.9 offset -527.2 -->
+            <circle cx="130" cy="130" r="100" fill="none" stroke="#3A2D0F" stroke-width="28"
+              stroke-dasharray="94.9 628.3" stroke-dashoffset="-527.2" stroke-linecap="butt"/>
+          </svg>
+          <div class="donut-center">
+            <strong>1.3M</strong>
+            <span>COP total</span>
           </div>
         </div>
 
-        <div class="budget-visual">
-          <div class="budget-bar-item">
-            <div class="budget-bar-label">
-              <span>Vuelos</span><span>480k — 36.9%</span>
-            </div>
-            <div class="budget-bar-track">
-              <div class="budget-bar-fill" style="width:37%"></div>
-            </div>
+        <!-- Rows -->
+        <div class="budget-rows">
+          <div class="budget-row">
+            <div class="br-dot" style="background:#C9A84C"></div>
+            <div class="br-label">Vuelos ida + regreso</div>
+            <div class="br-bar-track"><div class="br-bar-fill" style="width:37%;background:#C9A84C"></div></div>
+            <div class="br-value">480.040</div>
           </div>
-          <div class="budget-bar-item">
-            <div class="budget-bar-label">
-              <span>Hospedaje</span><span>180k — 13.8%</span>
-            </div>
-            <div class="budget-bar-track">
-              <div class="budget-bar-fill" style="width:14%"></div>
-            </div>
+          <div class="budget-row">
+            <div class="br-dot" style="background:#E8C96B"></div>
+            <div class="br-label">Comidas (4 días)</div>
+            <div class="br-bar-track"><div class="br-bar-fill" style="width:15%;background:#E8C96B"></div></div>
+            <div class="br-value">200.000</div>
           </div>
-          <div class="budget-bar-item">
-            <div class="budget-bar-label">
-              <span>Comidas</span><span>200k — 15.4%</span>
-            </div>
-            <div class="budget-bar-track">
-              <div class="budget-bar-fill" style="width:15%"></div>
-            </div>
+          <div class="budget-row">
+            <div class="br-dot" style="background:#8B6520"></div>
+            <div class="br-label">Hospedaje 3 noches (entre 2)</div>
+            <div class="br-bar-track"><div class="br-bar-fill" style="width:14%;background:#8B6520"></div></div>
+            <div class="br-value">180.000</div>
           </div>
-          <div class="budget-bar-item">
-            <div class="budget-bar-label">
-              <span>Transporte local</span><span>153k — 11.8%</span>
-            </div>
-            <div class="budget-bar-track">
-              <div class="budget-bar-fill" style="width:12%"></div>
-            </div>
+          <div class="budget-row">
+            <div class="br-dot" style="background:#A07830"></div>
+            <div class="br-label">Transporte local (Uber + buses)</div>
+            <div class="br-bar-track"><div class="br-bar-fill" style="width:12%;background:#A07830"></div></div>
+            <div class="br-value">153.000</div>
           </div>
-          <div class="budget-bar-item">
-            <div class="budget-bar-label">
-              <span>Termales</span><span>77k — 5.9%</span>
-            </div>
-            <div class="budget-bar-track">
-              <div class="budget-bar-fill" style="width:6%"></div>
-            </div>
+          <div class="budget-row">
+            <div class="br-dot" style="background:#D4A843"></div>
+            <div class="br-label">Termales Santa Rosa (sábado)</div>
+            <div class="br-bar-track"><div class="br-bar-fill" style="width:6%;background:#D4A843"></div></div>
+            <div class="br-value">77.000</div>
           </div>
-          <div class="budget-bar-item">
-            <div class="budget-bar-label">
-              <span>Actividades</span><span>90k — 6.9%</span>
-            </div>
-            <div class="budget-bar-track">
-              <div class="budget-bar-fill" style="width:7%"></div>
-            </div>
+          <div class="budget-row">
+            <div class="br-dot" style="background:#6B4F0F"></div>
+            <div class="br-label">Tour finca cafetera</div>
+            <div class="br-bar-track"><div class="br-bar-fill" style="width:5%;background:#6B4F0F"></div></div>
+            <div class="br-value">60.000</div>
           </div>
-          <div class="budget-bar-item">
-            <div class="budget-bar-label">
-              <span>Extras</span><span>120k — 9.2%</span>
-            </div>
-            <div class="budget-bar-track">
-              <div class="budget-bar-fill" style="width:9%"></div>
-            </div>
+          <div class="budget-row">
+            <div class="br-dot" style="background:#3A2D0F"></div>
+            <div class="br-label">Cocora, souvenirs e imprevistos</div>
+            <div class="br-bar-track"><div class="br-bar-fill" style="width:11%;background:#3A2D0F"></div></div>
+            <div class="br-value">149.960</div>
+          </div>
+          <div class="budget-row" style="border-top:1px solid var(--muted2);padding-top:0.75rem;margin-top:0.25rem">
+            <div class="br-dot" style="background:var(--gold)"></div>
+            <div class="br-label" style="color:var(--gold);font-weight:600">Total por persona</div>
+            <div class="br-bar-track"><div class="br-bar-fill" style="width:100%;background:var(--gold)"></div></div>
+            <div class="br-value" style="color:var(--gold)">1.300.000</div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
 
   <!-- ITINERARIO -->
-  <section id="itinerario">
+  <section id="itinerario" class="diagonal-top">
     <div class="container">
-      <div class="s-label">18 — 21 Junio</div>
+      <div class="s-label">18 – 21 Junio 2025</div>
       <h2 class="s-title">Itinerario</h2>
-      <p class="s-sub">Plan día a día con tiempos de desplazamiento incluidos.</p>
+      <p class="s-sub">Cada día planificado con tiempos de traslado y costos reales.</p>
 
       <div class="timeline">
 
         <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-header">
-            <div class="tl-dia">Día 1</div>
-            <div class="tl-fecha">Jueves 18 de junio</div>
+          <div class="tl-left">
+            <div class="tl-num">01</div>
+            <div class="tl-dayname">Jue</div>
           </div>
-          <div class="tl-titulo">Llegada a Pereira</div>
-          <div class="tl-grid">
-            <div class="tl-actividad">
-              <span class="icon">✈️</span>
-              <div class="text">
-                <strong>Aterrizaje PEI · 1:00 p.m.</strong>
-                Aeropuerto Matecana, dentro de la ciudad
-                <div class="cost">— gratis</div>
-              </div>
+          <div class="tl-right">
+            <div class="tl-header">
+              <div class="tl-badge">Día 1</div>
+              <div class="tl-fecha">Jueves 18 de junio · Llegada</div>
             </div>
-            <div class="tl-actividad">
-              <span class="icon">🚗</span>
-              <div class="text">
-                <strong>Uber al Airbnb · ~15 min</strong>
-                Zona Pinares o Álamos, segura y central
-                <div class="cost">~18.000 COP</div>
-              </div>
-            </div>
-            <div class="tl-actividad">
-              <span class="icon">🧳</span>
-              <div class="text">
-                <strong>Check-in y descanso · ~2:00 p.m.</strong>
-                Dejar maletas y refrescarse
-                <div class="cost">—</div>
-              </div>
-            </div>
-            <div class="tl-actividad">
-              <span class="icon">🏙️</span>
-              <div class="text">
-                <strong>Centro de Pereira · tarde</strong>
-                Plaza de Bolívar, Viaducto, Parque del Lago
-                <div class="cost">~8.000 Uber</div>
-              </div>
-            </div>
-            <div class="tl-actividad">
-              <span class="icon">🍽️</span>
-              <div class="text">
-                <strong>Cena · ~8:00 p.m.</strong>
-                Restaurante local en el centro
-                <div class="cost">~35.000 COP</div>
-              </div>
+            <div class="tl-title">Bienvenidos a Pereira</div>
+            <div class="tl-cards">
+              <div class="tl-card"><span class="tl-card-icon">✈️</span><div class="tl-card-body"><strong>Aterrizaje 1:00 p.m.</strong><p>Aeropuerto Matecana, dentro de la ciudad</p><div class="tl-card-cost">— incluido</div></div></div>
+              <div class="tl-card"><span class="tl-card-icon">🚗</span><div class="tl-card-body"><strong>Uber al Airbnb · 15 min</strong><p>Zona Pinares o Álamos</p><div class="tl-card-cost">~18.000 COP</div></div></div>
+              <div class="tl-card"><span class="tl-card-icon">🧳</span><div class="tl-card-body"><strong>Check-in · ~2:00 p.m.</strong><p>Dejar maletas, refrescarse</p><div class="tl-card-cost">—</div></div></div>
+              <div class="tl-card"><span class="tl-card-icon">🏙️</span><div class="tl-card-body"><strong>Centro de Pereira · tarde</strong><p>Plaza Bolívar, Viaducto, Parque del Lago</p><div class="tl-card-cost">~8.000 Uber</div></div></div>
+              <div class="tl-card"><span class="tl-card-icon">🍽️</span><div class="tl-card-body"><strong>Cena · ~8:00 p.m.</strong><p>Restaurante local en el centro</p><div class="tl-card-cost">~35.000 COP</div></div></div>
             </div>
           </div>
         </div>
 
         <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-header">
-            <div class="tl-dia">Día 2</div>
-            <div class="tl-fecha">Viernes 19 de junio</div>
+          <div class="tl-left">
+            <div class="tl-num">02</div>
+            <div class="tl-dayname">Vie</div>
           </div>
-          <div class="tl-titulo">Salento & Valle del Cocora</div>
-          <div class="tl-grid">
-            <div class="tl-actividad">
-              <span class="icon">🌅</span>
-              <div class="text">
-                <strong>Desayuno · 7:30 a.m.</strong>
-                En el Airbnb o cafetería cercana
-                <div class="cost">~15.000 COP</div>
-              </div>
+          <div class="tl-right">
+            <div class="tl-header">
+              <div class="tl-badge">Día 2</div>
+              <div class="tl-fecha">Viernes 19 de junio · Excursión</div>
             </div>
-            <div class="tl-actividad">
-              <span class="icon">🚌</span>
-              <div class="text">
-                <strong>Bus a Salento · 8:30 a.m.</strong>
-                Uber a terminal (~10k) + bus directo (~12k). Llegan ~9:45 a.m.
-                <div class="cost">~22.000 COP</div>
-              </div>
-            </div>
-            <div class="tl-actividad">
-              <span class="icon">🏘️</span>
-              <div class="text">
-                <strong>Recorrido Salento · 10:00 a.m.</strong>
-                Pueblo colorido, Alto de la Cruz, tiendas
-                <div class="cost">— gratis</div>
-              </div>
-            </div>
-            <div class="tl-actividad">
-              <span class="icon">🌿</span>
-              <div class="text">
-                <strong>Jeep al Cocora · 12:00 p.m.</strong>
-                15 min hasta el parque. Miradores de palmas de cera
-                <div class="cost">8.000 + 30.000 miradores</div>
-              </div>
-            </div>
-            <div class="tl-actividad">
-              <span class="icon">🥗</span>
-              <div class="text">
-                <strong>Almuerzo en Salento · 3:00 p.m.</strong>
-                De regreso del Cocora, trucha o bandeja
-                <div class="cost">~25.000 COP</div>
-              </div>
-            </div>
-            <div class="tl-actividad">
-              <span class="icon">🚌</span>
-              <div class="text">
-                <strong>Bus de regreso · 5:00 p.m.</strong>
-                Llegan a Pereira ~6:15 p.m.
-                <div class="cost">~12.000 COP</div>
-              </div>
+            <div class="tl-title">Salento & Valle del Cocora</div>
+            <div class="tl-cards">
+              <div class="tl-card"><span class="tl-card-icon">🌅</span><div class="tl-card-body"><strong>Desayuno · 7:30 a.m.</strong><p>Antes de salir al terminal</p><div class="tl-card-cost">~15.000 COP</div></div></div>
+              <div class="tl-card"><span class="tl-card-icon">🚌</span><div class="tl-card-body"><strong>Bus a Salento · 8:30 a.m.</strong><p>Uber terminal (~10k) + bus directo. Llegan ~9:45</p><div class="tl-card-cost">~22.000 COP</div></div></div>
+              <div class="tl-card"><span class="tl-card-icon">🏘️</span><div class="tl-card-body"><strong>Pueblo Salento · 10:00 a.m.</strong><p>Alto de la Cruz, tiendas, café de origen</p><div class="tl-card-cost">— gratis</div></div></div>
+              <div class="tl-card"><span class="tl-card-icon">🌿</span><div class="tl-card-body"><strong>Jeep al Cocora · 12:00 p.m.</strong><p>Palmas de cera, miradores, 15 min en jeep</p><div class="tl-card-cost">8k jeep + 30k miradores</div></div></div>
+              <div class="tl-card"><span class="tl-card-icon">🥗</span><div class="tl-card-body"><strong>Almuerzo en Salento · 3:00 p.m.</strong><p>Trucha, bandeja paisa o sancocho</p><div class="tl-card-cost">~25.000 COP</div></div></div>
+              <div class="tl-card"><span class="tl-card-icon">🚌</span><div class="tl-card-body"><strong>Bus de regreso · 5:00 p.m.</strong><p>Llegan a Pereira ~6:15 p.m.</p><div class="tl-card-cost">~12.000 COP</div></div></div>
             </div>
           </div>
         </div>
 
         <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-header">
-            <div class="tl-dia">Día 3</div>
-            <div class="tl-fecha">Sábado 20 de junio</div>
+          <div class="tl-left">
+            <div class="tl-num">03</div>
+            <div class="tl-dayname">Sáb</div>
           </div>
-          <div class="tl-titulo">Tour Cafetero & Termales</div>
-          <div class="tl-grid">
-            <div class="tl-actividad">
-              <span class="icon">☕</span>
-              <div class="text">
-                <strong>Tour finca cafetera · 9:00 a.m.</strong>
-                Recorrido en finca cercana: cosecha, proceso y degustación
-                <div class="cost">~60.000 COP</div>
-              </div>
+          <div class="tl-right">
+            <div class="tl-header">
+              <div class="tl-badge">Día 3</div>
+              <div class="tl-fecha">Sábado 20 de junio · Café & Relax</div>
             </div>
-            <div class="tl-actividad">
-              <span class="icon">🥘</span>
-              <div class="text">
-                <strong>Almuerzo · 1:00 p.m.</strong>
-                En la finca o de regreso en Pereira
-                <div class="cost">~25.000 COP</div>
-              </div>
-            </div>
-            <div class="tl-actividad">
-              <span class="icon">🚌</span>
-              <div class="text">
-                <strong>Bus a Santa Rosa de Cabal · 3:00 p.m.</strong>
-                30 min en bus + chiva a los termales
-                <div class="cost">~16.000 COP</div>
-              </div>
-            </div>
-            <div class="tl-actividad">
-              <span class="icon">♨️</span>
-              <div class="text">
-                <strong>Termales Santa Rosa · 4:00 p.m.</strong>
-                Aguas termales naturales, turno de tarde
-                <div class="cost">77.000 COP (fin de semana)</div>
-              </div>
-            </div>
-            <div class="tl-actividad">
-              <span class="icon">🌙</span>
-              <div class="text">
-                <strong>Regreso y cena · 8:00 p.m.</strong>
-                Noche libre en Pereira
-                <div class="cost">~30.000 COP</div>
-              </div>
+            <div class="tl-title">Tour Cafetero & Termales</div>
+            <div class="tl-cards">
+              <div class="tl-card"><span class="tl-card-icon">☕</span><div class="tl-card-body"><strong>Tour finca cafetera · 9:00 a.m.</strong><p>Cosecha, proceso y degustación del café</p><div class="tl-card-cost">~60.000 COP</div></div></div>
+              <div class="tl-card"><span class="tl-card-icon">🥘</span><div class="tl-card-body"><strong>Almuerzo · 1:00 p.m.</strong><p>En la finca o de regreso a Pereira</p><div class="tl-card-cost">~25.000 COP</div></div></div>
+              <div class="tl-card"><span class="tl-card-icon">🚌</span><div class="tl-card-body"><strong>Bus a Santa Rosa · 3:00 p.m.</strong><p>30 min + chiva hasta los termales</p><div class="tl-card-cost">~16.000 COP</div></div></div>
+              <div class="tl-card"><span class="tl-card-icon">♨️</span><div class="tl-card-body"><strong>Termales · 4:00 p.m.</strong><p>Aguas termales naturales, turno de tarde</p><div class="tl-card-cost">77.000 COP (fin de semana)</div></div></div>
+              <div class="tl-card"><span class="tl-card-icon">🌙</span><div class="tl-card-body"><strong>Regreso y cena · 8:00 p.m.</strong><p>Última noche en Pereira</p><div class="tl-card-cost">~30.000 COP</div></div></div>
             </div>
           </div>
         </div>
 
         <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-header">
-            <div class="tl-dia">Día 4</div>
-            <div class="tl-fecha">Domingo 21 de junio</div>
+          <div class="tl-left">
+            <div class="tl-num">04</div>
+            <div class="tl-dayname">Dom</div>
           </div>
-          <div class="tl-titulo">Último día & Regreso</div>
-          <div class="tl-grid">
-            <div class="tl-actividad">
-              <span class="icon">🌄</span>
-              <div class="text">
-                <strong>Mañana libre · 9:00 a.m.</strong>
-                Desayuno tranquilo, mercado de artesanías
-                <div class="cost">~20.000 COP</div>
-              </div>
+          <div class="tl-right">
+            <div class="tl-header">
+              <div class="tl-badge">Día 4</div>
+              <div class="tl-fecha">Domingo 21 de junio · Regreso</div>
             </div>
-            <div class="tl-actividad">
-              <span class="icon">🛍️</span>
-              <div class="text">
-                <strong>Souvenirs · 11:00 a.m.</strong>
-                Café de origen, artesanías, recuerdos
-                <div class="cost">40.000 COP</div>
-              </div>
-            </div>
-            <div class="tl-actividad">
-              <span class="icon">🧳</span>
-              <div class="text">
-                <strong>Check-out · 1:00 p.m.</strong>
-                Dejar el Airbnb
-                <div class="cost">—</div>
-              </div>
-            </div>
-            <div class="tl-actividad">
-              <span class="icon">🚗</span>
-              <div class="text">
-                <strong>Uber al aeropuerto · 4:30 p.m.</strong>
-                PEI a 15 min del centro. Estar 2h antes
-                <div class="cost">~18.000 COP</div>
-              </div>
-            </div>
-            <div class="tl-actividad">
-              <span class="icon">✈️</span>
-              <div class="text">
-                <strong>Vuelo de regreso · 6:55 p.m.</strong>
-                PEI → CTG · llegan 11:35 p.m.
-                <div class="cost">—</div>
-              </div>
+            <div class="tl-title">Último día, de vuelta a casa</div>
+            <div class="tl-cards">
+              <div class="tl-card"><span class="tl-card-icon">🌄</span><div class="tl-card-body"><strong>Mañana libre · 9:00 a.m.</strong><p>Desayuno, mercado de artesanías</p><div class="tl-card-cost">~20.000 COP</div></div></div>
+              <div class="tl-card"><span class="tl-card-icon">🛍️</span><div class="tl-card-body"><strong>Souvenirs · 11:00 a.m.</strong><p>Café de origen, tejidos, recuerdos</p><div class="tl-card-cost">~40.000 COP</div></div></div>
+              <div class="tl-card"><span class="tl-card-icon">🧳</span><div class="tl-card-body"><strong>Check-out · 1:00 p.m.</strong><p>Dejar el Airbnb</p><div class="tl-card-cost">—</div></div></div>
+              <div class="tl-card"><span class="tl-card-icon">🚗</span><div class="tl-card-body"><strong>Uber al aeropuerto · 4:30 p.m.</strong><p>PEI a 15 min del centro. 2h antes</p><div class="tl-card-cost">~18.000 COP</div></div></div>
+              <div class="tl-card"><span class="tl-card-icon">✈️</span><div class="tl-card-body"><strong>Vuelo regreso · 6:55 p.m.</strong><p>PEI → CTG · Llegan 11:35 p.m.</p><div class="tl-card-cost">— incluido</div></div></div>
             </div>
           </div>
         </div>
@@ -1453,128 +1700,142 @@
     <div class="container">
       <div class="s-label">Eje Cafetero</div>
       <h2 class="s-title">Qué visitar</h2>
-      <p class="s-sub">Los mejores lugares del itinerario y por qué valen la pena.</p>
+      <p class="s-sub">Lo mejor del viaje, de los paisajes de palmas de cera a las aguas termales.</p>
 
-      <div class="lugares-grid">
-        <div class="lugar-card">
+      <div class="lugares-featured">
+        <div class="lugar-card featured">
           <div class="lugar-img">
-            <img src="https://images.unsplash.com/photo-1596803244618-8dbf9a49d4d4?w=600&q=80&fit=crop" alt="Valle del Cocora" loading="lazy" />
+            <img src="https://images.unsplash.com/photo-1596803244618-8dbf9a49d4d4?w=800&q=80&fit=crop" alt="Valle del Cocora" loading="lazy"/>
+            <div class="lugar-img-overlay"></div>
           </div>
           <div class="lugar-body">
             <div class="lugar-tag">Viernes · Quindío</div>
             <h3>Valle del Cocora</h3>
-            <p>Hogar de las palmas de cera más altas del mundo, el árbol nacional de Colombia. Paisaje único e irreal.</p>
+            <p>Hogar de las palmas de cera más altas del mundo — el árbol nacional de Colombia. Un paisaje que parece de otro planeta, entre niebla, colibríes y senderos entre gigantes vegetales.</p>
           </div>
         </div>
 
         <div class="lugar-card">
           <div class="lugar-img">
-            <img src="https://images.unsplash.com/photo-1583597805681-b7b1f34b7f37?w=600&q=80&fit=crop" alt="Salento" loading="lazy" />
+            <img src="https://images.unsplash.com/photo-1583597805681-b7b1f34b7f37?w=600&q=80&fit=crop" alt="Salento" loading="lazy"/>
+            <div class="lugar-img-overlay"></div>
           </div>
           <div class="lugar-body">
             <div class="lugar-tag">Viernes · Quindío</div>
             <h3>Pueblo de Salento</h3>
-            <p>El pueblo más colorido del Eje Cafetero. Casas coloniales, tiendas de artesanías y el mejor café de origen.</p>
           </div>
         </div>
 
         <div class="lugar-card">
           <div class="lugar-img">
-            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80&fit=crop" alt="Cafe colombiano" loading="lazy" />
-          </div>
-          <div class="lugar-body">
-            <div class="lugar-tag">Sábado · Risaralda</div>
-            <h3>Finca Cafetera</h3>
-            <p>Aprende todo el proceso del café, desde la cerecita en la planta hasta la taza. Una experiencia única.</p>
-          </div>
-        </div>
-
-        <div class="lugar-card">
-          <div class="lugar-img">
-            <img src="https://images.unsplash.com/photo-1571401835393-8c5f35328320?w=600&q=80&fit=crop" alt="Termales Colombia" loading="lazy" />
+            <img src="https://images.unsplash.com/photo-1571401835393-8c5f35328320?w=600&q=80&fit=crop" alt="Termales" loading="lazy"/>
+            <div class="lugar-img-overlay"></div>
           </div>
           <div class="lugar-body">
             <div class="lugar-tag">Sábado · Santa Rosa</div>
             <h3>Termales Santa Rosa</h3>
-            <p>Aguas termales naturales entre montañas y cascadas. El plan perfecto para el sábado por la tarde.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="lugares-row">
+        <div class="lugar-card">
+          <div class="lugar-img">
+            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&q=80&fit=crop" alt="Café colombiano" loading="lazy"/>
+            <div class="lugar-img-overlay"></div>
+          </div>
+          <div class="lugar-body">
+            <div class="lugar-tag">Sábado</div>
+            <h3>Finca Cafetera</h3>
           </div>
         </div>
 
         <div class="lugar-card">
           <div class="lugar-img">
-            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop" alt="Pereira ciudad" loading="lazy" />
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80&fit=crop" alt="Centro Pereira" loading="lazy"/>
+            <div class="lugar-img-overlay"></div>
           </div>
           <div class="lugar-body">
-            <div class="lugar-tag">Jueves · Risaralda</div>
+            <div class="lugar-tag">Jueves</div>
             <h3>Centro de Pereira</h3>
-            <p>El Viaducto César Gaviria, la Plaza de Bolívar y el Parque del Lago. Primera impresión de la ciudad.</p>
           </div>
         </div>
 
         <div class="lugar-card">
           <div class="lugar-img">
-            <img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=600&q=80&fit=crop" alt="Artesanias Colombia" loading="lazy" />
+            <img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=400&q=80&fit=crop" alt="Artesanias" loading="lazy"/>
+            <div class="lugar-img-overlay"></div>
           </div>
           <div class="lugar-body">
-            <div class="lugar-tag">Domingo · Pereira</div>
-            <h3>Mercado de artesanías</h3>
-            <p>Café de origen, tejidos, recuerdos del Eje Cafetero. El mejor lugar para los souvenirs del último día.</p>
+            <div class="lugar-tag">Domingo</div>
+            <h3>Artesanías</h3>
+          </div>
+        </div>
+
+        <div class="lugar-card">
+          <div class="lugar-img">
+            <img src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=400&q=80&fit=crop" alt="Colombia montanas" loading="lazy"/>
+            <div class="lugar-img-overlay"></div>
+          </div>
+          <div class="lugar-body">
+            <div class="lugar-tag">Todo el viaje</div>
+            <h3>Eje Cafetero</h3>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- UBICACION -->
-  <section id="ubicacion">
+  <!-- MAPA -->
+  <section id="ubicacion" class="diagonal-top">
     <div class="container">
       <div class="s-label">Colombia · Risaralda</div>
       <h2 class="s-title">Dónde queda</h2>
-      <p class="s-sub">Pereira, capital del Eje Cafetero, en el corazón de los Andes colombianos.</p>
+      <p class="s-sub">Pereira, corazón del Eje Cafetero, en los Andes colombianos.</p>
 
       <div class="mapa-layout">
         <div class="mapa-wrap">
-          <img src="imagen-mapa.png" alt="Mapa de Colombia con Pereira en el Eje Cafetero" />
+          <img src="imagen-mapa.png" alt="Mapa Colombia · Pereira Eje Cafetero" />
           <div class="mapa-badge">
             <strong>Pereira · PEI</strong>
-            <span>Departamento de Risaralda</span>
+            <span>Dpto. de Risaralda · 1.411 m.s.n.m.</span>
           </div>
         </div>
 
         <div class="mapa-datos">
           <div class="mapa-dato">
-            <div class="mapa-dato-icon">📍</div>
+            <div class="mapa-icon">📍</div>
             <div>
               <label>Región</label>
-              <p>Eje Cafetero · Departamento de Risaralda · 1.411 m.s.n.m.</p>
+              <p>Eje Cafetero · Dpto. de Risaralda</p>
             </div>
           </div>
           <div class="mapa-dato">
-            <div class="mapa-dato-icon">✈️</div>
+            <div class="mapa-icon">✈️</div>
             <div>
               <label>Aeropuerto</label>
-              <p>Matecana Internacional (PEI) — ubicado dentro de la ciudad, 15 min al centro</p>
+              <p>Matecana Internacional (PEI) — dentro de la ciudad, ~15 min al centro en Uber</p>
             </div>
           </div>
           <div class="mapa-dato">
-            <div class="mapa-dato-icon">🌡️</div>
+            <div class="mapa-icon">🌡️</div>
             <div>
               <label>Clima en junio</label>
-              <p>Templado andino, 18–25 °C. Puede llover en las tardes. Llevar capa ligera.</p>
+              <p>Templado andino 18–25°C. Lleva una chaqueta liviana para los termales y el Cocora.</p>
             </div>
           </div>
           <div class="mapa-dato">
-            <div class="mapa-dato-icon">📍</div>
+            <div class="mapa-icon">🗺️</div>
             <div>
-              <label>Distancias clave</label>
-              <p>Salento 1h · Santa Rosa de Cabal 30 min · Manizales 1h · Armenia 45 min</p>
+              <label>Distancias</label>
+              <p>Salento 1h · Santa Rosa 30 min · Manizales 1h · Armenia 45 min</p>
             </div>
           </div>
           <div class="mapa-dato">
-            <div class="mapa-dato-icon">💡</div>
+            <div class="mapa-icon">💡</div>
             <div>
-              <label>Tip de viaje</label>
-              <p>El Airbnb en zona Pinares o Álamos es seguro, tiene buena conexión y está cerca de restaurantes.</p>
+              <label>Tip</label>
+              <p>Busquen Airbnb en zona Pinares o Álamos — seguros, bien ubicados y con fácil acceso al transporte.</p>
             </div>
           </div>
         </div>
@@ -1585,7 +1846,22 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-title">De la Costa al Café</div>
-    <p>Brayan & Valeria · Cartagena → Pereira · 18–21 Junio 2025</p>
+    <p class="footer-meta">CTG × PEI · 18 – 21 JUNIO 2025</p>
+    <div class="footer-names">
+      <div class="footer-name">
+        <div class="footer-name-img">
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=100&q=80&fit=crop&crop=faces" alt="Valeria"/>
+        </div>
+        <span>Valeria Carrillo</span>
+      </div>
+      <div class="footer-name">
+        <div class="footer-name-img">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80&fit=crop&crop=faces" alt="Brayan"/>
+        </div>
+        <span>Brayan Sierra</span>
+      </div>
+    </div>
+    <p class="copyright">LATAM AIRLINES COLOMBIA · PEREIRA · EJE CAFETERO</p>
   </footer>
 
 </body>
