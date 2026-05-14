@@ -514,130 +514,6 @@
       background: rgba(255,77,109,0.06);
     }
 
-    /* ── LA RUTA ── */
-    #ruta { background: var(--bg); }
-
-    .ruta-wrap {
-      background: var(--bg2);
-      border: 1px solid var(--muted2);
-      border-radius: var(--radius);
-      padding: 3rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .ruta-wrap::before {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,107,53,0.015) 5px, rgba(255,107,53,0.015) 10px);
-      pointer-events: none;
-    }
-
-    .ruta-vuelos {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-top: 2.5rem;
-    }
-
-    .ruta-vuelo {
-      background: var(--bg3);
-      border: 1px solid var(--muted2);
-      border-radius: 14px;
-      padding: 1.5rem;
-      transition: border-color 0.2s;
-    }
-
-    .ruta-vuelo:hover { border-color: var(--gold-border); }
-
-    .ruta-vuelo-tipo {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: 1rem;
-    }
-
-    .ruta-vuelo-ports {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .rvp-code {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      font-weight: 700;
-      line-height: 1;
-      color: var(--white);
-    }
-
-    .rvp-city {
-      font-size: 0.65rem;
-      color: var(--muted);
-      margin-top: 0.15rem;
-    }
-
-    .rvp-mid {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.2rem;
-    }
-
-    .rvp-line {
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--rose), var(--lilac), transparent);
-    }
-
-    .rvp-dur {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--muted);
-    }
-
-    .rvp-icon {
-      font-size: 0.8rem;
-      color: var(--rose);
-    }
-
-    .ruta-vuelo-info {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-
-    .rvu-detail label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--muted);
-      display: block;
-      margin-bottom: 0.2rem;
-    }
-
-    .rvu-detail value {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--white);
-    }
-
-    .rvu-precio {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      background: linear-gradient(90deg, var(--orange), var(--rose));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-weight: 700;
-    }
-
     /* ── BOARDING PASSES ── */
     #vuelos { background: var(--bg2); }
 
@@ -1403,6 +1279,9 @@
     .light-section .bp-tear::before,
     .light-section .bp-tear::after { background: #F4EDE5; }
     .light-section .bp-qr { border-color: rgba(0,0,0,0.12); background: repeating-linear-gradient(0deg, rgba(0,0,0,0.08) 0, rgba(0,0,0,0.08) 2px, transparent 2px, transparent 6px), repeating-linear-gradient(90deg, rgba(0,0,0,0.08) 0, rgba(0,0,0,0.08) 2px, transparent 2px, transparent 6px); }
+    .light-section .bp-precio { border-color: rgba(0,0,0,0.1); }
+    .light-section .bp-precio label { color: rgba(0,0,0,0.45); }
+    .light-section .bp-precio small { color: rgba(0,0,0,0.4); }
 
     /* budget */
     .light-section .budget-table { background: #fff; border-color: rgba(0,0,0,0.07); }
@@ -1851,93 +1730,6 @@
           </div>
         </div>
 
-      </div>
-    </div>
-  </section>
-
-  <!-- LA RUTA -->
-  <section id="ruta" class="light-section alt">
-    <div class="container">
-      <div class="s-label">LATAM Airlines Colombia</div>
-      <h2 class="s-title">La Ruta</h2>
-      <p class="s-sub">Dos vuelos, un destino. Cartagena a Pereira y de regreso.</p>
-
-      <div class="ruta-wrap">
-        <div class="ruta-vuelos">
-
-          <div class="ruta-vuelo">
-            <div class="ruta-vuelo-tipo">Vuelo de ida</div>
-            <div class="ruta-vuelo-ports">
-              <div>
-                <div class="rvp-code">CTG</div>
-                <div class="rvp-city">Cartagena de Indias</div>
-              </div>
-              <div class="rvp-mid">
-                <div class="rvp-icon">✈</div>
-                <div class="rvp-line"></div>
-                <div class="rvp-dur">3h 35min · 1 parada</div>
-              </div>
-              <div style="text-align:right">
-                <div class="rvp-code">PEI</div>
-                <div class="rvp-city">Pereira · Matecana</div>
-              </div>
-            </div>
-            <div class="ruta-vuelo-info">
-              <div style="display:flex;gap:2rem">
-                <div class="rvu-detail">
-                  <label>Fecha</label>
-                  <value>Jue 18 Junio 2025</value>
-                </div>
-                <div class="rvu-detail">
-                  <label>Sale</label>
-                  <value>9:25 a.m.</value>
-                </div>
-                <div class="rvu-detail">
-                  <label>Llega</label>
-                  <value>1:00 p.m.</value>
-                </div>
-              </div>
-              <div class="rvu-precio">COP 236.758</div>
-            </div>
-          </div>
-
-          <div class="ruta-vuelo">
-            <div class="ruta-vuelo-tipo">Vuelo de regreso</div>
-            <div class="ruta-vuelo-ports">
-              <div>
-                <div class="rvp-code">PEI</div>
-                <div class="rvp-city">Pereira · Matecana</div>
-              </div>
-              <div class="rvp-mid">
-                <div class="rvp-icon">✈</div>
-                <div class="rvp-line"></div>
-                <div class="rvp-dur">4h 40min · 1 parada</div>
-              </div>
-              <div style="text-align:right">
-                <div class="rvp-code">CTG</div>
-                <div class="rvp-city">Cartagena de Indias</div>
-              </div>
-            </div>
-            <div class="ruta-vuelo-info">
-              <div style="display:flex;gap:2rem">
-                <div class="rvu-detail">
-                  <label>Fecha</label>
-                  <value>Dom 21 Junio 2025</value>
-                </div>
-                <div class="rvu-detail">
-                  <label>Sale</label>
-                  <value>6:55 p.m.</value>
-                </div>
-                <div class="rvu-detail">
-                  <label>Llega</label>
-                  <value>11:35 p.m.</value>
-                </div>
-              </div>
-              <div class="rvu-precio">COP 243.282</div>
-            </div>
-          </div>
-
-        </div>
       </div>
     </div>
   </section>
