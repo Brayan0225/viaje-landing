@@ -9,10 +9,10 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:          #0E0C0F;
-      --bg2:         #131018;
-      --bg3:         #1A1520;
-      --bg4:         #221828;
+      --bg:          #150D22;
+      --bg2:         #1E1430;
+      --bg3:         #261A3A;
+      --bg4:         #301F46;
       --orange:      #FF6B35;
       --rose:        #FF4D6D;
       --lilac:       #C77DFF;
@@ -1369,8 +1369,8 @@
     }
 
     /* ── LIGHT SECTIONS ── */
-    .light-section { background: #FBF7F4; }
-    .light-section.alt { background: #F4EDE5; }
+    .light-section { background: #FFFBF8; }
+    .light-section.alt { background: #FFF5EE; }
 
     .light-section .s-title  { color: #1A1020; }
     .light-section .s-sub    { color: #9B8E88; }
@@ -1463,25 +1463,211 @@
     /* ── TILT 3D ── */
     .tilt-card { transform-style: preserve-3d; will-change: transform; }
 
+    /* ── COUNTDOWN ── */
+    .countdown-section {
+      background: linear-gradient(135deg, #150D22 0%, #2D1244 50%, #1E0D35 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .countdown-section::before {
+      content: '';
+      position: absolute;
+      top: -30%; left: 15%;
+      width: 600px; height: 500px;
+      background: radial-gradient(ellipse, rgba(255,107,53,0.18) 0%, rgba(255,77,109,0.1) 40%, transparent 70%);
+      pointer-events: none;
+      filter: blur(30px);
+    }
+    .countdown-section::after {
+      content: '';
+      position: absolute;
+      bottom: -20%; right: 10%;
+      width: 400px; height: 400px;
+      background: radial-gradient(ellipse, rgba(199,125,255,0.15) 0%, transparent 65%);
+      pointer-events: none;
+      filter: blur(25px);
+    }
+    .countdown-section .s-title { color: #fff; }
+    .countdown-section .s-sub   { color: rgba(255,255,255,0.55); }
+
+    .cd-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cd-unit {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,107,53,0.2);
+      border-radius: 20px;
+      padding: 2.25rem 1rem 1.75rem;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      transition: border-color 0.3s, transform 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .cd-unit::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,107,53,0.04), rgba(199,125,255,0.04));
+    }
+    .cd-unit:hover { border-color: rgba(255,107,53,0.5); transform: translateY(-3px); }
+
+    .cd-number {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--orange), var(--rose));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 0.6rem;
+      display: block;
+      letter-spacing: -0.02em;
+    }
+    .cd-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+    .cd-footer {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .cd-flight-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.5);
+      border: 1px dashed rgba(255,107,53,0.35);
+      border-radius: 50px;
+      padding: 0.6rem 1.5rem;
+    }
+    .cd-past { text-align: center; padding: 3rem; }
+    .cd-past strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      background: linear-gradient(90deg, var(--orange), var(--rose));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; padding-top: 6rem; }
-      .hero-right { display: none; }
-      .viajeros-grid { grid-template-columns: 1fr; }
-      .ruta-vuelos { grid-template-columns: 1fr; }
-      .boarding-pass { grid-template-columns: 1fr; }
-      .bp-tear, .bp-stub { display: none; }
-      .budget-layout { grid-template-columns: 1fr; }
-      .donut-wrap { margin: 0 auto; }
-      .lugares-featured { grid-template-columns: 1fr; }
-      .lugar-card.featured { grid-row: span 1; }
-      .lugar-card.featured .lugar-img { height: 280px; }
-      .lugares-row { grid-template-columns: 1fr 1fr; }
-      .mapa-layout { grid-template-columns: 1fr; }
+      /* desactivar diagonales en tablet/móvil */
+      .diagonal-top, .diagonal-both {
+        clip-path: none !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        padding-top: 4rem !important;
+        padding-bottom: 4rem !important;
+      }
+
+      section { padding: 4rem 1.5rem; }
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
-      .timeline::before { left: 60px; }
-      .tl-item { grid-template-columns: 60px 1fr; gap: 1.5rem; }
+
+      /* hero */
+      .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; gap: 1.5rem; }
+      .hero-right { display: none; }
+      .hero-wm { font-size: clamp(5rem, 30vw, 8rem); }
+      .hero-h1  { font-size: clamp(2.8rem, 10vw, 4rem); }
+      .hero-pills { gap: 0.5rem; }
+      .hero-scroll { left: 1.5rem; }
+
+      /* viajeros */
+      .viajeros-grid { grid-template-columns: 1fr; }
+      .viajero-photo { height: 280px; }
+
+      /* ruta */
+      .ruta-vuelos { grid-template-columns: 1fr; }
+      .ruta-vuelo-info { flex-direction: column; gap: 0.75rem; align-items: flex-start; }
+
+      /* boarding */
+      .boarding-pass { grid-template-columns: 1fr; }
+      .bp-tear, .bp-stub { display: none; }
+      .bp-ruta { gap: 0.75rem; }
+      .bp-code { font-size: 2.2rem; }
+      .bp-details { flex-wrap: wrap; gap: 1rem; }
+
+      /* presupuesto */
+      .budget-layout { grid-template-columns: 1fr; }
+      .donut-wrap { margin: 0 auto 2rem; width: 220px; height: 220px; }
+      .donut-wrap svg { width: 220px; height: 220px; }
+
+      /* itinerario */
+      .timeline::before { left: 52px; }
+      .tl-item { grid-template-columns: 52px 1fr; gap: 1.25rem; }
+      .tl-num { font-size: 1.5rem; }
+      .tl-cards { grid-template-columns: 1fr 1fr; }
+
+      /* lugares */
+      .lugares-featured { grid-template-columns: 1fr; }
+      .lugar-card.featured { grid-row: span 1; }
+      .lugar-card.featured .lugar-img { height: 240px; }
+      .lugares-row { grid-template-columns: 1fr 1fr; }
+
+      /* mapa */
+      .mapa-layout { grid-template-columns: 1fr; }
+      .mapa-wrap img { height: 300px; }
+
+      /* countdown */
+      .cd-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    }
+
+    @media (max-width: 600px) {
+      section { padding: 3rem 1.1rem; }
+      nav { padding: 0.9rem 1.1rem; }
+
+      /* hero */
+      .hero { padding: 5.5rem 1.1rem 2.5rem; }
+      .hero-h1  { font-size: clamp(2.2rem, 9vw, 3rem); }
+      .hero-wm  { font-size: 4.5rem; }
+
+      /* timeline */
+      .timeline::before { left: 0; display: none; }
+      .tl-item { grid-template-columns: 1fr; gap: 0; }
+      .tl-left { display: flex; align-items: center; gap: 0.75rem; text-align: left; padding: 0 0 0.5rem 0; }
+      .tl-left::after { display: none; }
+      .tl-num { font-size: 1.2rem; }
+      .tl-cards { grid-template-columns: 1fr; }
+
+      /* boarding */
+      .bp-main { padding: 1.5rem; }
+      .bp-code { font-size: 1.8rem; }
+      .bp-details { gap: 0.75rem; }
+
+      /* budget donut */
+      .donut-wrap { display: none; }
+      .budget-layout { grid-template-columns: 1fr; }
+
+      /* lugares */
+      .lugares-row { grid-template-columns: 1fr; }
+      .lugar-card:not(.featured) .lugar-body p { display: block; }
+
+      /* mapa */
+      .mapa-wrap img { height: 240px; }
+      .mapa-datos { gap: 1.25rem; }
+
+      /* countdown */
+      .cd-grid { grid-template-columns: repeat(2, 1fr); }
+      .cd-number { font-size: 2.5rem; }
+
+      /* viajero */
+      .viajero-photo { height: 240px; }
     }
   </style>
 </head>
@@ -2161,6 +2347,41 @@
     </div>
   </section>
 
+  <!-- CUENTA REGRESIVA -->
+  <section id="countdown" class="countdown-section">
+    <div class="container">
+      <div class="s-label">El viaje se acerca</div>
+      <h2 class="s-title" style="margin-bottom:0.5rem">Cuenta Regresiva</h2>
+      <p class="s-sub" style="margin-bottom:2.5rem">Hasta que Brayan & Valeria despeguen de Cartagena</p>
+
+      <div id="cd-wrap">
+        <div class="cd-grid">
+          <div class="cd-unit reveal">
+            <span class="cd-number" id="cd-dias">--</span>
+            <div class="cd-label">Días</div>
+          </div>
+          <div class="cd-unit reveal delay-1">
+            <span class="cd-number" id="cd-horas">--</span>
+            <div class="cd-label">Horas</div>
+          </div>
+          <div class="cd-unit reveal delay-2">
+            <span class="cd-number" id="cd-min">--</span>
+            <div class="cd-label">Minutos</div>
+          </div>
+          <div class="cd-unit reveal delay-3">
+            <span class="cd-number" id="cd-seg">--</span>
+            <div class="cd-label">Segundos</div>
+          </div>
+        </div>
+        <div class="cd-footer reveal delay-4">
+          <div class="cd-flight-tag">
+            ✈ &nbsp; CTG → PEI &nbsp;·&nbsp; Jue 18 Jun 2026 &nbsp;·&nbsp; 9:25 a.m.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- MAPA -->
   <section id="ubicacion" class="diagonal-top">
     <div class="container">
@@ -2319,6 +2540,35 @@
     }, { threshold: 0.5 });
 
     document.querySelectorAll('.hero-stats').forEach(s => counterObserver.observe(s));
+
+    // ── CUENTA REGRESIVA ──
+    (function() {
+      const trip = new Date('2026-06-18T09:25:00').getTime();
+      const els = {
+        dias:  document.getElementById('cd-dias'),
+        horas: document.getElementById('cd-horas'),
+        min:   document.getElementById('cd-min'),
+        seg:   document.getElementById('cd-seg'),
+      };
+
+      function pad(n) { return String(Math.max(0, n)).padStart(2, '0'); }
+
+      function tick() {
+        const diff = trip - Date.now();
+        if (diff <= 0) {
+          document.getElementById('cd-wrap').innerHTML =
+            '<div class="cd-past"><strong>✈ ¡El viaje ya comenzó!</strong></div>';
+          return;
+        }
+        els.dias.textContent  = pad(Math.floor(diff / 86400000));
+        els.horas.textContent = pad(Math.floor((diff % 86400000) / 3600000));
+        els.min.textContent   = pad(Math.floor((diff % 3600000)  / 60000));
+        els.seg.textContent   = pad(Math.floor((diff % 60000)    / 1000));
+      }
+
+      tick();
+      setInterval(tick, 1000);
+    })();
 
     // ── PARALLAX HERO WATERMARK ──
     const wm = document.querySelector('.hero-wm');
