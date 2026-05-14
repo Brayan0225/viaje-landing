@@ -1368,6 +1368,101 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    /* ── LIGHT SECTIONS ── */
+    .light-section { background: #FBF7F4; }
+    .light-section.alt { background: #F4EDE5; }
+
+    .light-section .s-title  { color: #1A1020; }
+    .light-section .s-sub    { color: #9B8E88; }
+    .light-section .s-label  { color: var(--orange); }
+
+    /* viajero cards */
+    .light-section .viajero-card { background: #fff; border-color: rgba(0,0,0,0.07); box-shadow: 0 6px 30px rgba(0,0,0,0.07); }
+    .light-section .viajero-card:hover { border-color: rgba(255,77,109,0.3); box-shadow: 0 12px 40px rgba(255,77,109,0.12); }
+    .light-section .viajero-nombre { color: #1A1020; }
+    .light-section .viajero-desc { color: #7A6E6A; }
+    .light-section .viajero-meta { color: #9B8E88; }
+
+    /* ruta */
+    .light-section .ruta-wrap { background: #fff; border-color: rgba(0,0,0,0.07); box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+    .light-section .ruta-vuelo { background: #FBF7F4; border-color: rgba(0,0,0,0.07); }
+    .light-section .ruta-vuelo:hover { border-color: rgba(255,107,53,0.3); }
+    .light-section .rvp-code  { color: #1A1020; }
+    .light-section .rvu-detail value { color: #1A1020; }
+
+    /* boarding passes */
+    .light-section .boarding-pass { background: #fff; border-color: rgba(0,0,0,0.07); }
+    .light-section .boarding-pass:hover { box-shadow: 0 16px 50px rgba(255,77,109,0.12); }
+    .light-section .bp-stub   { background: #F4EDE5; }
+    .light-section .bp-code   { color: #1A1020; }
+    .light-section .bp-detail value { color: #1A1020; }
+    .light-section .bp-stub-top value { color: #1A1020; }
+    .light-section .bp-tear {
+      background: repeating-linear-gradient(to bottom, rgba(0,0,0,0.12) 0px, rgba(0,0,0,0.12) 6px, transparent 6px, transparent 12px);
+    }
+    .light-section .bp-tear::before,
+    .light-section .bp-tear::after { background: #F4EDE5; }
+    .light-section .bp-qr { border-color: rgba(0,0,0,0.12); background: repeating-linear-gradient(0deg, rgba(0,0,0,0.08) 0, rgba(0,0,0,0.08) 2px, transparent 2px, transparent 6px), repeating-linear-gradient(90deg, rgba(0,0,0,0.08) 0, rgba(0,0,0,0.08) 2px, transparent 2px, transparent 6px); }
+
+    /* budget */
+    .light-section .budget-table { background: #fff; border-color: rgba(0,0,0,0.07); }
+    .light-section .budget-header { background: rgba(255,107,53,0.06); border-bottom-color: rgba(0,0,0,0.07); }
+    .light-section .budget-row { border-bottom-color: rgba(0,0,0,0.05); }
+    .light-section .budget-row .concepto { color: #9B8E88; }
+    .light-section .budget-row .valor    { color: #1A1020; }
+    .light-section .budget-row.total-row { background: rgba(255,107,53,0.06); border-color: rgba(255,107,53,0.15); }
+    .light-section .br-label { color: #9B8E88; }
+    .light-section .br-value { color: #1A1020; }
+    .light-section .br-bar-track { background: rgba(0,0,0,0.08); }
+
+    /* timeline */
+    .light-section .tl-num   { color: rgba(255,107,53,0.18); }
+    .light-section .tl-title { color: #1A1020; }
+    .light-section .tl-fecha { color: #9B8E88; }
+    .light-section .tl-card  { background: #fff; border-color: rgba(0,0,0,0.07); box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
+    .light-section .tl-card:hover { border-color: rgba(199,125,255,0.4); background: #fff; box-shadow: 0 4px 20px rgba(199,125,255,0.12); }
+    .light-section .tl-card-body strong { color: #1A1020; }
+    .light-section .tl-card-body p      { color: #9B8E88; }
+    .light-section details.tl-right summary:hover .tl-title { color: var(--orange); }
+
+    /* lugares */
+    .light-section .lugar-card { background: #fff; border-color: rgba(0,0,0,0.07); box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+    .light-section .lugar-card:hover { border-color: rgba(255,107,53,0.3); box-shadow: 0 12px 40px rgba(255,107,53,0.1); }
+    .light-section .lugar-body h3 { color: #1A1020; }
+    .light-section .lugar-body p  { color: #9B8E88; }
+
+    /* ── REVEAL ON SCROLL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.delay-1 { transition-delay: 0.1s; }
+    .reveal.delay-2 { transition-delay: 0.2s; }
+    .reveal.delay-3 { transition-delay: 0.3s; }
+    .reveal.delay-4 { transition-delay: 0.4s; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── CURSOR GLOW ── */
+    .cursor-glow {
+      position: fixed;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,107,53,0.35) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%, -50%);
+      transition: left 0.06s linear, top 0.06s linear, width 0.2s, height 0.2s, opacity 0.3s;
+      mix-blend-mode: screen;
+    }
+    .cursor-glow.hovering {
+      width: 60px; height: 60px;
+      background: radial-gradient(circle, rgba(255,77,109,0.3) 0%, transparent 70%);
+    }
+
+    /* ── TILT 3D ── */
+    .tilt-card { transform-style: preserve-3d; will-change: transform; }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr; padding-top: 6rem; }
@@ -1391,6 +1486,9 @@
   </style>
 </head>
 <body>
+
+  <!-- CURSOR GLOW -->
+  <div class="cursor-glow" id="cursorGlow"></div>
 
   <!-- ELEMENTOS DE VIAJE ANIMADOS -->
   <div class="travel-elements" aria-hidden="true">
@@ -1440,11 +1538,11 @@
         <span class="line2">al Café</span>
       </h1>
       <p class="hero-names"><strong>Brayan & Valeria</strong> &nbsp;·&nbsp; Cartagena → Pereira</p>
-      <div class="hero-pills">
+      <div class="hero-pills hero-stats">
         <div class="pill">18 – 21 Junio</div>
-        <div class="pill">3 noches</div>
+        <div class="pill"><span data-count="3">3</span> noches</div>
         <div class="pill">LATAM Airlines</div>
-        <div class="pill">1.3M COP / persona</div>
+        <div class="pill"><span data-count="2">2</span> viajeros</div>
       </div>
     </div>
 
@@ -1507,7 +1605,7 @@
   </section>
 
   <!-- LOS VIAJEROS -->
-  <section id="viajeros" class="diagonal-top">
+  <section id="viajeros" class="diagonal-top light-section">
     <div class="container">
       <div class="s-label">Los protagonistas</div>
       <h2 class="s-title">Los Viajeros</h2>
@@ -1516,7 +1614,7 @@
       <div class="viajeros-grid">
 
         <!-- VALERIA -->
-        <div class="viajero-card">
+        <div class="viajero-card tilt-card reveal">
           <div class="viajero-photo">
             <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80&fit=crop&crop=faces" alt="Valeria Carrillo" />
             <div class="viajero-photo-overlay"></div>
@@ -1542,7 +1640,7 @@
         </div>
 
         <!-- BRAYAN -->
-        <div class="viajero-card">
+        <div class="viajero-card tilt-card reveal delay-2">
           <div class="viajero-photo">
             <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80&fit=crop&crop=faces" alt="Brayan Sierra" />
             <div class="viajero-photo-overlay"></div>
@@ -1572,7 +1670,7 @@
   </section>
 
   <!-- LA RUTA -->
-  <section id="ruta">
+  <section id="ruta" class="light-section alt">
     <div class="container">
       <div class="s-label">LATAM Airlines Colombia</div>
       <h2 class="s-title">La Ruta</h2>
@@ -1659,13 +1757,13 @@
   </section>
 
   <!-- BOARDING PASSES -->
-  <section id="vuelos" class="diagonal-top">
+  <section id="vuelos" class="diagonal-top light-section">
     <div class="container">
       <div class="s-label">Tiquetes</div>
       <h2 class="s-title">Boarding Passes</h2>
       <p class="s-sub">Tarifa Basic · bolso de mano incluido · sin reembolso</p>
 
-      <div class="passes-wrap">
+      <div class="passes-wrap reveal">
 
         <div class="boarding-pass">
           <div class="bp-main">
@@ -1760,7 +1858,7 @@
   </section>
 
   <!-- PRESUPUESTO -->
-  <section id="presupuesto">
+  <section id="presupuesto" class="light-section alt">
     <div class="container">
       <div class="s-label">Por persona</div>
       <h2 class="s-title">Presupuesto</h2>
@@ -1855,7 +1953,7 @@
   </section>
 
   <!-- ITINERARIO -->
-  <section id="itinerario" class="diagonal-top">
+  <section id="itinerario" class="diagonal-top light-section">
     <div class="container">
       <div class="s-label">18 – 21 Junio 2025</div>
       <h2 class="s-title">Itinerario</h2>
@@ -1973,14 +2071,14 @@
   </section>
 
   <!-- LUGARES -->
-  <section id="lugares">
+  <section id="lugares" class="light-section alt">
     <div class="container">
       <div class="s-label">Eje Cafetero</div>
       <h2 class="s-title">Qué visitar</h2>
       <p class="s-sub">Lo mejor del viaje, de los paisajes de palmas de cera a las aguas termales.</p>
 
       <div class="lugares-featured">
-        <div class="lugar-card featured">
+        <div class="lugar-card featured tilt-card reveal">
           <div class="lugar-img">
             <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80&fit=crop" alt="Valle del Cocora" loading="lazy"/>
             <div class="lugar-img-overlay"></div>
@@ -2140,6 +2238,97 @@
     </div>
     <p class="copyright">LATAM AIRLINES COLOMBIA · PEREIRA · EJE CAFETERO</p>
   </footer>
+
+  <script>
+    // ── CURSOR GLOW ──
+    const cursor = document.getElementById('cursorGlow');
+    let cx = -100, cy = -100;
+    document.addEventListener('mousemove', e => {
+      cx = e.clientX; cy = e.clientY;
+      cursor.style.left = cx + 'px';
+      cursor.style.top  = cy + 'px';
+    });
+    document.querySelectorAll('a, button, .viajero-card, .lugar-card, .boarding-pass, .tl-card, details summary').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+    });
+
+    // ── SCROLL REVEAL ──
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Auto-reveal secciones completas
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.tl-item, .lugar-card:not(.featured), .ruta-vuelo, .budget-row').forEach((el, i) => {
+            el.style.transitionDelay = (i * 0.07) + 's';
+            el.classList.add('reveal', 'visible');
+          });
+        }
+      });
+    }, { threshold: 0.05 });
+
+    document.querySelectorAll('section').forEach(s => sectionObserver.observe(s));
+
+    // ── TILT 3D EN CARDS ──
+    document.querySelectorAll('.tilt-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const x = e.clientX - r.left;
+        const y = e.clientY - r.top;
+        const rx = ((y - r.height / 2) / r.height) * -10;
+        const ry = ((x - r.width  / 2) / r.width)  *  10;
+        card.style.transition = 'transform 0.1s ease';
+        card.style.transform  = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px) scale(1.01)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transition = 'transform 0.5s ease';
+        card.style.transform  = '';
+      });
+    });
+
+    // ── HERO COUNTERS ──
+    function animateCount(el, target, duration) {
+      let start = 0;
+      const step = target / (duration / 16);
+      const timer = setInterval(() => {
+        start += step;
+        if (start >= target) { el.textContent = target; clearInterval(timer); }
+        else el.textContent = Math.floor(start);
+      }, 16);
+    }
+
+    const counterObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('[data-count]').forEach(el => {
+            animateCount(el, parseInt(el.dataset.count), 1200);
+          });
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.hero-stats').forEach(s => counterObserver.observe(s));
+
+    // ── PARALLAX HERO WATERMARK ──
+    const wm = document.querySelector('.hero-wm');
+    if (wm) {
+      window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        wm.style.transform = `translate(-50%, calc(-50% + ${y * 0.25}px))`;
+      }, { passive: true });
+    }
+  </script>
 
 </body>
 </html>
