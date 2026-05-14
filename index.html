@@ -1168,40 +1168,121 @@
       letter-spacing: 1px;
     }
 
-    /* ── AVION ANIMADO ── */
-    .plane-fly {
-      position: fixed;
-      top: 18%;
-      left: 108vw;
-      z-index: 49;
+    /* ── ELEMENTOS DE VIAJE ANIMADOS ── */
+    .travel-elements {
+      position: fixed; inset: 0;
       pointer-events: none;
+      z-index: 49;
+      overflow: hidden;
+    }
+
+    .te-item {
+      position: absolute;
       display: flex;
       align-items: center;
-      animation: planeFly 32s linear infinite;
-      animation-delay: 5s;
     }
 
-    .plane-emoji {
+    /* ── Avión 1: derecha → izquierda (ida) ── */
+    .te-plane1 {
+      top: 18%; left: 108vw;
       font-size: 2rem;
-      transform: scaleX(-1);
       filter: drop-shadow(0 0 14px rgba(255,107,53,0.9));
-      display: inline-block;
+      animation: fly1 30s linear infinite;
+      animation-delay: 4s;
     }
-
-    .plane-contrail {
-      width: 110px;
-      height: 2px;
-      background: linear-gradient(to right, transparent, rgba(255,107,53,0.35), rgba(199,125,255,0.2));
-      margin-left: -3px;
+    .te-plane1 > span:last-child { transform: scaleX(-1); display: inline-block; }
+    .te-trail1 {
+      width: 100px; height: 2px;
+      background: linear-gradient(to right, transparent, rgba(255,107,53,0.5));
+      margin-right: -2px;
     }
-
-    @keyframes planeFly {
-      0%   { transform: translateX(0)      translateY(0);    opacity: 0; }
+    @keyframes fly1 {
+      0%   { transform: translateX(0) translateY(0);     opacity: 0; }
       4%   { opacity: 1; }
-      50%  { transform: translateX(-60vw)  translateY(-35px); opacity: 1; }
-      95%  { opacity: 0.8; }
-      99%  { opacity: 0; }
-      100% { transform: translateX(-130vw) translateY(-50px); opacity: 0; }
+      96%  { opacity: 0.9; }
+      100% { transform: translateX(-125vw) translateY(-45px); opacity: 0; }
+    }
+
+    /* ── Avión 2: izquierda → derecha (regreso), más pequeño ── */
+    .te-plane2 {
+      top: 62%; left: -80px;
+      font-size: 1.3rem;
+      filter: drop-shadow(0 0 10px rgba(199,125,255,0.85));
+      animation: fly2 42s linear infinite;
+      animation-delay: 18s;
+    }
+    .te-trail2 {
+      width: 70px; height: 1.5px;
+      background: linear-gradient(to left, transparent, rgba(199,125,255,0.45));
+      margin-left: -2px;
+    }
+    @keyframes fly2 {
+      0%   { transform: translateX(0) translateY(0);    opacity: 0; }
+      4%   { opacity: 1; }
+      96%  { opacity: 0.8; }
+      100% { transform: translateX(115vw) translateY(-25px); opacity: 0; }
+    }
+
+    /* ── Avión 3: pequeño, derecha → izquierda, altura media ── */
+    .te-plane3 {
+      top: 40%; left: 115vw;
+      font-size: 1rem;
+      filter: drop-shadow(0 0 8px rgba(255,77,109,0.7));
+      animation: fly3 55s linear infinite;
+      animation-delay: 35s;
+    }
+    .te-plane3 > span:last-child { transform: scaleX(-1); display: inline-block; }
+    .te-trail3 {
+      width: 55px; height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255,77,109,0.4));
+      margin-right: -1px;
+    }
+    @keyframes fly3 {
+      0%   { transform: translateX(0) translateY(0);     opacity: 0; }
+      4%   { opacity: 0.8; }
+      96%  { opacity: 0.7; }
+      100% { transform: translateX(-130vw) translateY(30px); opacity: 0; }
+    }
+
+    /* ── Taza de café flotando hacia arriba ── */
+    .te-coffee {
+      bottom: -60px; left: 78%;
+      font-size: 1.6rem;
+      filter: drop-shadow(0 0 10px rgba(255,179,71,0.6));
+      animation: floatUp 24s ease-in-out infinite;
+      animation-delay: 10s;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(-8deg);  opacity: 0; }
+      6%   { opacity: 0.65; }
+      90%  { opacity: 0.4; }
+      96%  { opacity: 0; }
+      100% { transform: translateY(-110vh) rotate(12deg); opacity: 0; }
+    }
+
+    /* ── Palmera derivando ── */
+    .te-palm {
+      top: -60px; right: 22%;
+      font-size: 1.4rem;
+      filter: drop-shadow(0 0 8px rgba(199,125,255,0.5));
+      animation: driftDown 36s ease-in-out infinite;
+      animation-delay: 22s;
+    }
+    @keyframes driftDown {
+      0%   { transform: translateY(0) rotate(0deg) translateX(0);   opacity: 0; }
+      6%   { opacity: 0.5; }
+      90%  { opacity: 0.35; }
+      96%  { opacity: 0; }
+      100% { transform: translateY(110vh) rotate(35deg) translateX(60px); opacity: 0; }
+    }
+
+    /* ── Maleta rebotando por la esquina ── */
+    .te-bag {
+      bottom: -60px; left: 35%;
+      font-size: 1.3rem;
+      filter: drop-shadow(0 0 8px rgba(255,107,53,0.5));
+      animation: floatUp 30s ease-in-out infinite;
+      animation-delay: 45s;
     }
 
     /* ── ITINERARIO ACORDEÓN ── */
@@ -1210,33 +1291,72 @@
       list-style: none;
       cursor: pointer;
       outline: none;
+      user-select: none;
     }
     details.tl-right summary::-webkit-details-marker { display: none; }
+
+    .tl-summary { position: relative; }
 
     .tl-summary-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     .tl-toggle {
-      width: 28px; height: 28px;
+      width: 32px; height: 32px;
       border-radius: 50%;
-      border: 1px solid rgba(255,107,53,0.3);
+      border: 1px solid rgba(255,107,53,0.35);
       background: rgba(255,107,53,0.08);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       color: var(--orange);
-      transition: transform 0.3s, background 0.2s;
+      transition: transform 0.35s ease, background 0.2s, box-shadow 0.2s;
       flex-shrink: 0;
+    }
+
+    /* Pulso en días cerrados para indicar que son clickeables */
+    details:not([open]) .tl-toggle {
+      animation: togglePulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes togglePulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,107,53,0.5); }
+      60%       { box-shadow: 0 0 0 9px rgba(255,107,53,0); }
     }
 
     details[open] .tl-toggle {
       transform: rotate(180deg);
-      background: rgba(255,107,53,0.18);
+      background: rgba(255,107,53,0.2);
+      box-shadow: 0 0 16px rgba(255,107,53,0.3);
+    }
+
+    /* Hint "toca para ver" en días cerrados */
+    details:not([open]) .tl-summary::after {
+      content: '↓  Toca para ver las actividades';
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 1.5px;
+      color: var(--orange);
+      opacity: 0.55;
+      margin-top: 0.5rem;
+      animation: hintBlink 2s ease-in-out infinite;
+    }
+
+    @keyframes hintBlink {
+      0%, 100% { opacity: 0.55; }
+      50%       { opacity: 0.2; }
+    }
+
+    /* Hover en el summary */
+    details.tl-right summary:hover .tl-title { color: var(--peach); transition: color 0.2s; }
+    details.tl-right summary:hover .tl-toggle {
+      background: rgba(255,107,53,0.2);
+      border-color: rgba(255,107,53,0.7);
     }
 
     details[open] .tl-cards {
@@ -1272,10 +1392,29 @@
 </head>
 <body>
 
-  <!-- AVION VOLANDO -->
-  <div class="plane-fly" aria-hidden="true">
-    <div class="plane-contrail"></div>
-    <span class="plane-emoji">✈</span>
+  <!-- ELEMENTOS DE VIAJE ANIMADOS -->
+  <div class="travel-elements" aria-hidden="true">
+    <!-- Avión 1: derecha a izquierda, grande (vuelo de ida) -->
+    <div class="te-item te-plane1">
+      <span class="te-trail1"></span>
+      <span>✈</span>
+    </div>
+    <!-- Avión 2: izquierda a derecha, mediano (vuelo de regreso) -->
+    <div class="te-item te-plane2">
+      <span>✈</span>
+      <span class="te-trail2"></span>
+    </div>
+    <!-- Avión 3: derecha a izquierda, pequeño -->
+    <div class="te-item te-plane3">
+      <span class="te-trail3"></span>
+      <span>✈</span>
+    </div>
+    <!-- Taza de café flotando (Eje Cafetero) -->
+    <div class="te-item te-coffee">☕</div>
+    <!-- Palmera derivando (Valle del Cocora) -->
+    <div class="te-item te-palm">🌴</div>
+    <!-- Maleta flotando (viaje) -->
+    <div class="te-item te-bag">🧳</div>
   </div>
 
   <!-- NAV -->
