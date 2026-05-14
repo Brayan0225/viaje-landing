@@ -3,30 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Viaje a Pereira — Junio 2025</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <title>De la Costa al Café — Brayan & Valeria</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --cafe:      #5C3D2E;
-      --cafe-light:#8B5E3C;
-      --verde:     #2D6A4F;
-      --verde-light:#52B788;
-      --crema:     #F5EFE6;
-      --tierra:    #C9A97A;
-      --blanco:    #FDFAF6;
-      --gris:      #6B7280;
-      --dark:      #1A1A1A;
+      --bg:         #080808;
+      --bg2:        #111111;
+      --bg3:        #1A1A1A;
+      --gold:       #C9A84C;
+      --gold-light: #E8C96B;
+      --gold-dim:   rgba(201,168,76,0.15);
+      --gold-border:rgba(201,168,76,0.25);
+      --white:      #F2EDE4;
+      --muted:      #6B6560;
+      --muted2:     #3A3530;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--blanco);
-      color: var(--dark);
+      background: var(--bg);
+      color: var(--white);
       line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── GRAIN OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
     }
 
     /* ── NAV ── */
@@ -37,347 +50,450 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1rem 2.5rem;
-      background: rgba(253, 250, 246, 0.92);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(92, 61, 46, 0.1);
+      padding: 1.25rem 3rem;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--gold-border);
     }
 
     .nav-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      color: var(--cafe);
-      font-weight: 700;
-      letter-spacing: 0.5px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--gold);
+      letter-spacing: 3px;
+      text-transform: uppercase;
     }
 
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
       list-style: none;
     }
 
     .nav-links a {
       text-decoration: none;
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       font-weight: 500;
-      color: var(--gris);
+      color: var(--muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
       transition: color 0.2s;
     }
 
-    .nav-links a:hover { color: var(--cafe); }
+    .nav-links a:hover { color: var(--gold); }
 
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, var(--cafe) 0%, var(--verde) 100%);
       position: relative;
       overflow: hidden;
-      padding-top: 4rem;
+      padding: 6rem 2rem 4rem;
     }
 
-    .hero::before {
-      content: '';
+    .hero-bg {
       position: absolute;
       inset: 0;
-      background: url('imagen-mapa.png') center/cover no-repeat;
-      opacity: 0.08;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,0.07) 0%, transparent 70%);
+    }
+
+    .hero-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
     }
 
     .hero-content {
       position: relative;
       text-align: center;
-      color: white;
-      padding: 2rem;
-      max-width: 700px;
+      max-width: 900px;
     }
 
-    .hero-badge {
-      display: inline-block;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.3);
-      backdrop-filter: blur(8px);
-      padding: 0.4rem 1.2rem;
-      border-radius: 50px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 2px;
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 4px;
       text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      color: var(--tierra);
+      color: var(--gold);
+      margin-bottom: 2rem;
     }
 
-    .hero h1 {
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    .hero-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-size: clamp(3.5rem, 9vw, 7rem);
       font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 1rem;
-      text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+      line-height: 0.95;
+      margin-bottom: 0.5rem;
+      color: var(--white);
     }
 
-    .hero h1 span { color: var(--tierra); }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
 
-    .hero p {
-      font-size: 1.15rem;
-      opacity: 0.85;
+    .hero-subtitle {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--muted);
       margin-bottom: 2.5rem;
-      font-weight: 400;
     }
 
-    .hero-stats {
+    .hero-meta {
       display: flex;
-      gap: 2.5rem;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 2px;
+      margin-bottom: 3.5rem;
+    }
+
+    .hero-meta span { color: var(--gold-light); }
+    .hero-meta .dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--muted2);
+    }
+
+    .hero-pills {
+      display: flex;
+      gap: 1rem;
       justify-content: center;
       flex-wrap: wrap;
     }
 
-    .hero-stat {
-      text-align: center;
+    .pill {
+      border: 1px solid var(--gold-border);
+      background: var(--gold-dim);
+      padding: 0.5rem 1.25rem;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      color: var(--gold-light);
+      font-weight: 500;
+      letter-spacing: 0.5px;
     }
 
-    .hero-stat strong {
-      display: block;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--tierra);
-      font-family: 'Playfair Display', serif;
-    }
-
-    .hero-stat span {
-      font-size: 0.8rem;
-      opacity: 0.7;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .scroll-hint {
+    .hero-scroll {
       position: absolute;
-      bottom: 2rem;
+      bottom: 2.5rem;
       left: 50%;
       transform: translateX(-50%);
-      color: rgba(255,255,255,0.5);
-      font-size: 0.75rem;
-      letter-spacing: 1px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 0.5rem;
-    }
-
-    .scroll-hint::after {
-      content: '';
-      width: 1px;
-      height: 40px;
-      background: rgba(255,255,255,0.3);
-      animation: scrollLine 1.5s ease-in-out infinite;
-    }
-
-    @keyframes scrollLine {
-      0%, 100% { opacity: 0.3; transform: scaleY(1); }
-      50% { opacity: 1; transform: scaleY(1.2); }
-    }
-
-    /* ── SECTIONS ── */
-    section { padding: 5rem 2rem; }
-
-    .container { max-width: 1100px; margin: 0 auto; }
-
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 600;
+      color: var(--muted);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--verde);
+    }
+
+    .hero-scroll::after {
+      content: '';
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .s-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .s-label::after {
+      content: '';
+      flex: 0 0 40px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.4;
+    }
+
+    .s-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.15;
       margin-bottom: 0.75rem;
     }
 
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 4vw, 2.8rem);
-      color: var(--cafe);
-      margin-bottom: 1rem;
-      line-height: 1.2;
+    .s-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 500px;
+      margin-bottom: 3.5rem;
     }
 
-    .section-sub {
-      color: var(--gris);
-      font-size: 1rem;
-      max-width: 560px;
-      margin-bottom: 3rem;
-    }
+    /* ── BOARDING PASSES ── */
+    #vuelos { background: var(--bg); }
 
-    /* ── VUELOS ── */
-    #vuelos { background: var(--crema); }
-
-    .vuelos-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    .passes-wrap {
+      display: flex;
+      flex-direction: column;
       gap: 1.5rem;
       margin-bottom: 2.5rem;
     }
 
-    @media (max-width: 700px) {
-      .vuelos-grid { grid-template-columns: 1fr; }
-    }
-
-    .vuelo-card {
-      background: white;
+    .boarding-pass {
+      display: grid;
+      grid-template-columns: 1fr auto 200px;
+      background: var(--bg2);
+      border: 1px solid var(--gold-border);
       border-radius: 16px;
-      padding: 1.75rem;
-      box-shadow: 0 4px 24px rgba(92, 61, 46, 0.08);
-      border: 1px solid rgba(92, 61, 46, 0.06);
-      transition: transform 0.2s, box-shadow 0.2s;
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
     }
 
-    .vuelo-card:hover {
+    .boarding-pass:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 32px rgba(92, 61, 46, 0.14);
+      box-shadow: 0 12px 40px rgba(201,168,76,0.1);
     }
 
-    .vuelo-tipo {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 1.5px;
+    .bp-main {
+      padding: 2rem 2.5rem;
+    }
+
+    .bp-tipo {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      margin-bottom: 1.25rem;
-    }
-
-    .vuelo-tipo.ida { color: var(--verde); }
-    .vuelo-tipo.regreso { color: var(--cafe-light); }
-
-    .vuelo-tipo::before {
-      content: '';
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: currentColor;
-    }
-
-    .vuelo-ruta {
+      color: var(--gold);
+      margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
+      gap: 0.5rem;
     }
 
-    .vuelo-aeropuerto {
-      text-align: center;
+    .bp-tipo::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
     }
 
-    .vuelo-aeropuerto .codigo {
-      font-size: 1.8rem;
-      font-weight: 700;
+    .bp-ruta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .bp-aeropuerto {}
+
+    .bp-code {
       font-family: 'Playfair Display', serif;
-      color: var(--cafe);
+      font-size: 3rem;
+      font-weight: 700;
       line-height: 1;
+      color: var(--white);
     }
 
-    .vuelo-aeropuerto .ciudad {
-      font-size: 0.7rem;
-      color: var(--gris);
+    .bp-city {
+      font-size: 0.72rem;
+      color: var(--muted);
       margin-top: 0.2rem;
+      letter-spacing: 0.5px;
     }
 
-    .vuelo-linea {
+    .bp-arrow {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.25rem;
+      gap: 0.35rem;
     }
 
-    .vuelo-linea .duracion {
-      font-size: 0.75rem;
-      color: var(--gris);
-      font-weight: 500;
-    }
-
-    .vuelo-linea .linea {
+    .bp-arrow-line {
       width: 100%;
-      height: 1px;
-      background: var(--tierra);
-      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0;
     }
 
-    .vuelo-linea .linea::before,
-    .vuelo-linea .linea::after {
+    .bp-arrow-line::before,
+    .bp-arrow-line::after {
       content: '';
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--tierra);
+      flex: 1;
+      height: 1px;
+      background: var(--muted2);
     }
 
-    .vuelo-linea .linea::before { left: 0; }
-    .vuelo-linea .linea::after { right: 0; }
+    .bp-arrow-icon {
+      font-size: 0.9rem;
+      color: var(--gold);
+      padding: 0 0.5rem;
+    }
 
-    .vuelo-linea .parada {
+    .bp-dur {
+      font-family: 'Space Mono', monospace;
       font-size: 0.68rem;
-      color: var(--tierra);
-      font-weight: 500;
-    }
-
-    .vuelo-horario {
-      display: flex;
-      justify-content: space-between;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--dark);
-      margin-bottom: 1rem;
-    }
-
-    .vuelo-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      padding-top: 1rem;
-      border-top: 1px solid var(--crema);
-    }
-
-    .vuelo-fecha {
-      font-size: 0.8rem;
-      color: var(--gris);
-    }
-
-    .vuelo-precio {
-      text-align: right;
-    }
-
-    .vuelo-precio .precio-label {
-      font-size: 0.65rem;
-      color: var(--gris);
-      text-transform: uppercase;
+      color: var(--muted);
       letter-spacing: 1px;
     }
 
-    .vuelo-precio .precio-valor {
-      font-size: 1.2rem;
+    .bp-parada {
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.5px;
+    }
+
+    .bp-details {
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    .bp-detail label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .bp-detail value {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    /* Tear line */
+    .bp-tear {
+      width: 1px;
+      background: repeating-linear-gradient(
+        to bottom,
+        var(--muted2) 0px,
+        var(--muted2) 6px,
+        transparent 6px,
+        transparent 12px
+      );
+      position: relative;
+    }
+
+    .bp-tear::before,
+    .bp-tear::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1px solid var(--gold-border);
+    }
+
+    .bp-tear::before { top: -9px; }
+    .bp-tear::after { bottom: -9px; }
+
+    /* Stub */
+    .bp-stub {
+      padding: 2rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--bg3);
+    }
+
+    .bp-stub-top label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    .bp-stub-top value {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--white);
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .bp-qr {
+      width: 60px; height: 60px;
+      background:
+        repeating-linear-gradient(0deg, var(--muted2) 0, var(--muted2) 2px, transparent 2px, transparent 6px),
+        repeating-linear-gradient(90deg, var(--muted2) 0, var(--muted2) 2px, transparent 2px, transparent 6px);
+      border: 1px solid var(--muted2);
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+
+    .bp-precio {
+      border-top: 1px solid var(--muted2);
+      padding-top: 1rem;
+    }
+
+    .bp-precio label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .bp-precio value {
+      font-size: 1.1rem;
       font-weight: 700;
-      color: var(--cafe);
+      color: var(--gold);
+      font-family: 'Playfair Display', serif;
     }
 
-    .vuelo-precio .precio-moneda {
-      font-size: 0.8rem;
-      color: var(--gris);
+    .bp-precio small {
+      font-size: 0.7rem;
+      color: var(--muted);
     }
 
-    .vuelo-aerolinea {
-      font-size: 0.75rem;
-      color: var(--gris);
-      margin-top: 0.5rem;
-    }
-
+    /* Total strip */
     .vuelo-total {
-      background: var(--cafe);
-      color: white;
+      background: var(--gold);
       border-radius: 12px;
       padding: 1.25rem 2rem;
       display: flex;
@@ -387,98 +503,318 @@
       gap: 1rem;
     }
 
-    .vuelo-total p { font-size: 0.9rem; opacity: 0.8; }
-
-    .vuelo-total .total-valor {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: var(--tierra);
+    .vuelo-total-left p {
+      font-size: 0.78rem;
+      color: rgba(0,0,0,0.6);
+      font-weight: 500;
     }
 
-    .tarifa-nota {
-      font-size: 0.75rem;
-      opacity: 0.65;
-      margin-top: 0.25rem;
+    .vuelo-total-left strong {
+      font-size: 0.88rem;
+      color: #080808;
+      font-weight: 700;
+    }
+
+    .vuelo-total-right {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #080808;
+    }
+
+    /* ── PRESUPUESTO ── */
+    #presupuesto { background: var(--bg2); }
+
+    .budget-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 750px) {
+      .budget-layout { grid-template-columns: 1fr; }
+    }
+
+    .budget-table {
+      background: var(--bg3);
+      border: 1px solid var(--gold-border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .budget-header {
+      background: var(--gold-dim);
+      padding: 1rem 1.5rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      border-bottom: 1px solid var(--gold-border);
+    }
+
+    .budget-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.85rem 1.5rem;
+      border-bottom: 1px solid var(--muted2);
+      font-size: 0.85rem;
+    }
+
+    .budget-row:last-child { border-bottom: none; }
+
+    .budget-row .concepto { color: var(--muted); }
+    .budget-row .valor { color: var(--white); font-weight: 600; font-family: 'Space Mono', monospace; font-size: 0.8rem; }
+
+    .budget-row.total-row {
+      background: var(--gold-dim);
+      border-top: 1px solid var(--gold-border);
+    }
+
+    .budget-row.total-row .concepto {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .budget-row.total-row .valor {
+      color: var(--gold);
+      font-size: 1rem;
+    }
+
+    .budget-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .budget-bar-item {}
+
+    .budget-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .budget-bar-label span:first-child { color: var(--muted); }
+    .budget-bar-label span:last-child { color: var(--white); font-family: 'Space Mono', monospace; font-size: 0.72rem; }
+
+    .budget-bar-track {
+      height: 6px;
+      background: var(--muted2);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .budget-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      border-radius: 10px;
+      transition: width 1s ease;
     }
 
     /* ── ITINERARIO ── */
-    #itinerario { background: var(--blanco); }
+    #itinerario { background: var(--bg); }
 
-    .itinerario-grid {
+    .timeline {
+      position: relative;
+      padding-left: 2.5rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 12px;
+      bottom: 12px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold), var(--gold-border), transparent);
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 3rem;
+    }
+
+    .tl-item:last-child { margin-bottom: 0; }
+
+    .tl-dot {
+      position: absolute;
+      left: -2.5rem;
+      top: 8px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      background: var(--bg);
+      transform: translateX(-6px);
+    }
+
+    .tl-dot::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .tl-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .tl-dia {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+    }
+
+    .tl-fecha {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .tl-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    .tl-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .tl-actividad {
+      background: var(--bg2);
+      border: 1px solid var(--muted2);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      transition: border-color 0.2s;
+    }
+
+    .tl-actividad:hover { border-color: var(--gold-border); }
+
+    .tl-actividad .icon {
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .tl-actividad .text strong {
+      display: block;
+      color: var(--white);
+      font-weight: 500;
+      margin-bottom: 0.15rem;
+      font-size: 0.84rem;
+    }
+
+    .tl-actividad .cost {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--gold);
+      margin-top: 0.3rem;
+    }
+
+    /* ── LUGARES ── */
+    #lugares { background: var(--bg2); }
+
+    .lugares-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.25rem;
     }
 
-    .dia-card {
-      background: var(--crema);
+    @media (max-width: 900px) {
+      .lugares-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .lugares-grid { grid-template-columns: 1fr; }
+    }
+
+    .lugar-card {
+      background: var(--bg3);
+      border: 1px solid var(--muted2);
       border-radius: 16px;
-      padding: 1.5rem;
-      border-left: 4px solid var(--verde);
-      transition: transform 0.2s;
+      overflow: hidden;
+      transition: transform 0.25s, border-color 0.25s;
+      cursor: default;
     }
 
-    .dia-card:hover { transform: translateY(-2px); }
-
-    .dia-numero {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--verde-light);
-      line-height: 1;
-      margin-bottom: 0.25rem;
+    .lugar-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--gold-border);
     }
 
-    .dia-fecha {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--cafe);
+    .lugar-img {
+      height: 180px;
+      overflow: hidden;
+      background: var(--bg2);
+      position: relative;
+    }
+
+    .lugar-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+      filter: brightness(0.85);
+    }
+
+    .lugar-card:hover .lugar-img img { transform: scale(1.05); }
+
+    .lugar-body {
+      padding: 1.25rem;
+    }
+
+    .lugar-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 0.75rem;
-    }
-
-    .dia-titulo {
-      font-weight: 600;
-      font-size: 1rem;
-      color: var(--dark);
+      color: var(--gold);
       margin-bottom: 0.5rem;
     }
 
-    .dia-actividades {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
+    .lugar-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--white);
+      margin-bottom: 0.5rem;
     }
 
-    .dia-actividades li {
-      font-size: 0.82rem;
-      color: var(--gris);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5rem;
-    }
-
-    .dia-actividades li::before {
-      content: '→';
-      color: var(--verde);
-      flex-shrink: 0;
-      margin-top: 0.05rem;
+    .lugar-body p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
     }
 
     /* ── MAPA ── */
-    #ubicacion { background: var(--cafe); color: white; }
-
-    #ubicacion .section-label { color: var(--tierra); }
-    #ubicacion .section-title { color: white; }
-    #ubicacion .section-sub { color: rgba(255,255,255,0.65); }
+    #ubicacion { background: var(--bg); }
 
     .mapa-layout {
       display: grid;
-      grid-template-columns: 1fr 1.4fr;
-      gap: 3rem;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 4rem;
       align-items: center;
     }
 
@@ -486,222 +822,403 @@
       .mapa-layout { grid-template-columns: 1fr; }
     }
 
-    .mapa-info {
+    .mapa-wrap {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--gold-border);
+    }
+
+    .mapa-wrap img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(20%) brightness(0.75) sepia(15%);
+    }
+
+    .mapa-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8,8,8,0.6) 0%, transparent 50%);
+    }
+
+    .mapa-badge {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      z-index: 2;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--gold-border);
+      padding: 0.75rem 1.25rem;
+      border-radius: 10px;
+    }
+
+    .mapa-badge strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--gold);
+    }
+
+    .mapa-badge span {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .mapa-datos {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1.75rem;
     }
 
     .mapa-dato {
-      border-left: 3px solid var(--tierra);
-      padding-left: 1rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
     }
 
-    .mapa-dato strong {
-      display: block;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--tierra);
-      margin-bottom: 0.25rem;
-    }
-
-    .mapa-dato p {
-      font-size: 0.95rem;
-      opacity: 0.85;
-    }
-
-    .mapa-img {
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-    }
-
-    .mapa-img img {
-      width: 100%;
-      height: 360px;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* ── INFO PEREIRA ── */
-    #pereira { background: var(--crema); }
-
-    .lugares-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.25rem;
-    }
-
-    .lugar-card {
-      background: white;
-      border-radius: 16px;
-      padding: 1.5rem;
-      box-shadow: 0 2px 16px rgba(92, 61, 46, 0.07);
-      border: 1px solid rgba(92, 61, 46, 0.05);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .lugar-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 28px rgba(92, 61, 46, 0.13);
-    }
-
-    .lugar-icon {
-      width: 44px; height: 44px;
-      border-radius: 12px;
+    .mapa-dato-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
     }
 
-    .lugar-card h3 {
-      font-weight: 600;
-      font-size: 1rem;
-      color: var(--cafe);
-      margin-bottom: 0.5rem;
+    .mapa-dato label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.3rem;
     }
 
-    .lugar-card p {
-      font-size: 0.83rem;
-      color: var(--gris);
-      line-height: 1.5;
+    .mapa-dato p {
+      font-size: 0.88rem;
+      color: var(--muted);
     }
 
     /* ── FOOTER ── */
     footer {
-      background: var(--dark);
-      color: rgba(255,255,255,0.5);
+      background: var(--bg2);
+      border-top: 1px solid var(--muted2);
+      padding: 3rem 2rem;
       text-align: center;
-      padding: 2rem;
-      font-size: 0.8rem;
     }
 
-    footer strong { color: var(--tierra); }
+    .footer-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    footer p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 1px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .boarding-pass { grid-template-columns: 1fr; }
+      .bp-tear { display: none; }
+      .bp-stub { border-top: 1px dashed var(--muted2); }
+    }
   </style>
 </head>
 <body>
 
   <!-- NAV -->
   <nav>
-    <div class="nav-logo">Pereira 2025</div>
+    <div class="nav-logo">CTG × PEI — 2025</div>
     <ul class="nav-links">
       <li><a href="#vuelos">Vuelos</a></li>
+      <li><a href="#presupuesto">Presupuesto</a></li>
       <li><a href="#itinerario">Itinerario</a></li>
-      <li><a href="#ubicacion">Ubicacion</a></li>
-      <li><a href="#pereira">Que visitar</a></li>
+      <li><a href="#lugares">Lugares</a></li>
     </ul>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-lines"></div>
     <div class="hero-content">
-      <div class="hero-badge">Eje Cafetero — Colombia</div>
-      <h1>Viaje a<br><span>Pereira</span></h1>
-      <p>18 al 21 de junio · Cartagena → Pereira · LATAM Airlines</p>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <strong>3</strong>
-          <span>Noches</span>
-        </div>
-        <div class="hero-stat">
-          <strong>CTG</strong>
-          <span>Origen</span>
-        </div>
-        <div class="hero-stat">
-          <strong>PEI</strong>
-          <span>Destino</span>
-        </div>
-        <div class="hero-stat">
-          <strong>Jun</strong>
-          <span>2025</span>
-        </div>
+      <div class="hero-eyebrow">Eje Cafetero · Colombia</div>
+      <h1 class="hero-title">De la Costa<br><em>al Café</em></h1>
+      <p class="hero-subtitle">Brayan & Valeria</p>
+      <div class="hero-meta">
+        <span>18 Jun</span>
+        <div class="dot"></div>
+        <span>Cartagena → Pereira</span>
+        <div class="dot"></div>
+        <span>21 Jun</span>
+      </div>
+      <div class="hero-pills">
+        <div class="pill">3 noches</div>
+        <div class="pill">LATAM Airlines</div>
+        <div class="pill">1.3M COP / persona</div>
+        <div class="pill">Eje Cafetero</div>
       </div>
     </div>
-    <div class="scroll-hint">scroll</div>
+    <div class="hero-scroll">scroll</div>
   </section>
 
   <!-- VUELOS -->
   <section id="vuelos">
     <div class="container">
-      <div class="section-label">LATAM Airlines Colombia</div>
-      <h2 class="section-title">Vuelos seleccionados</h2>
-      <p class="section-sub">Tarifa Basic — incluye bolso o mochila de mano. Sin reembolso.</p>
+      <div class="s-label">LATAM Airlines Colombia</div>
+      <h2 class="s-title">Boarding Passes</h2>
+      <p class="s-sub">Tarifa Basic · bolso de mano incluido · sin reembolso</p>
 
-      <div class="vuelos-grid">
+      <div class="passes-wrap">
+
         <!-- IDA -->
-        <div class="vuelo-card">
-          <div class="vuelo-tipo ida">Vuelo de ida</div>
-          <div class="vuelo-ruta">
-            <div class="vuelo-aeropuerto">
-              <div class="codigo">CTG</div>
-              <div class="ciudad">Cartagena</div>
+        <div class="boarding-pass">
+          <div class="bp-main">
+            <div class="bp-tipo">Vuelo de ida</div>
+            <div class="bp-ruta">
+              <div class="bp-aeropuerto">
+                <div class="bp-code">CTG</div>
+                <div class="bp-city">Cartagena de Indias</div>
+              </div>
+              <div class="bp-arrow">
+                <div class="bp-arrow-line">
+                  <div class="bp-arrow-icon">✈</div>
+                </div>
+                <div class="bp-dur">3h 35min</div>
+                <div class="bp-parada">1 parada</div>
+              </div>
+              <div class="bp-aeropuerto" style="text-align:right">
+                <div class="bp-code">PEI</div>
+                <div class="bp-city">Pereira · Matecana</div>
+              </div>
             </div>
-            <div class="vuelo-linea">
-              <div class="duracion">3h 35min</div>
-              <div class="linea"></div>
-              <div class="parada">1 parada</div>
-            </div>
-            <div class="vuelo-aeropuerto">
-              <div class="codigo">PEI</div>
-              <div class="ciudad">Pereira</div>
+            <div class="bp-details">
+              <div class="bp-detail">
+                <label>Fecha</label>
+                <value>Jue 18 Junio 2025</value>
+              </div>
+              <div class="bp-detail">
+                <label>Sale</label>
+                <value>9:25 a.m.</value>
+              </div>
+              <div class="bp-detail">
+                <label>Llega</label>
+                <value>1:00 p.m.</value>
+              </div>
+              <div class="bp-detail">
+                <label>Tarifa</label>
+                <value>Basic</value>
+              </div>
             </div>
           </div>
-          <div class="vuelo-horario">
-            <span>9:25 a.m.</span>
-            <span>1:00 p.m.</span>
-          </div>
-          <div class="vuelo-aerolinea">LATAM Airlines Colombia</div>
-          <div class="vuelo-footer">
-            <div class="vuelo-fecha">Jueves, 18 de junio 2025</div>
-            <div class="vuelo-precio">
-              <div class="precio-label">por pasajero</div>
-              <div class="precio-valor"><span class="precio-moneda">COP </span>236.758</div>
+          <div class="bp-tear"></div>
+          <div class="bp-stub">
+            <div class="bp-stub-top">
+              <label>Pasajeros</label>
+              <value>Brayan & Valeria</value>
+              <label>Aerolínea</label>
+              <value>LATAM Airlines</value>
+              <div class="bp-qr"></div>
+            </div>
+            <div class="bp-precio">
+              <label>Por pasajero</label>
+              <value>COP 236.758</value>
+              <br><small>Tarifa sin reembolso</small>
             </div>
           </div>
         </div>
 
         <!-- REGRESO -->
-        <div class="vuelo-card">
-          <div class="vuelo-tipo regreso">Vuelo de regreso</div>
-          <div class="vuelo-ruta">
-            <div class="vuelo-aeropuerto">
-              <div class="codigo">PEI</div>
-              <div class="ciudad">Pereira</div>
+        <div class="boarding-pass">
+          <div class="bp-main">
+            <div class="bp-tipo">Vuelo de regreso</div>
+            <div class="bp-ruta">
+              <div class="bp-aeropuerto">
+                <div class="bp-code">PEI</div>
+                <div class="bp-city">Pereira · Matecana</div>
+              </div>
+              <div class="bp-arrow">
+                <div class="bp-arrow-line">
+                  <div class="bp-arrow-icon">✈</div>
+                </div>
+                <div class="bp-dur">4h 40min</div>
+                <div class="bp-parada">1 parada</div>
+              </div>
+              <div class="bp-aeropuerto" style="text-align:right">
+                <div class="bp-code">CTG</div>
+                <div class="bp-city">Cartagena de Indias</div>
+              </div>
             </div>
-            <div class="vuelo-linea">
-              <div class="duracion">4h 40min</div>
-              <div class="linea"></div>
-              <div class="parada">1 parada</div>
-            </div>
-            <div class="vuelo-aeropuerto">
-              <div class="codigo">CTG</div>
-              <div class="ciudad">Cartagena</div>
+            <div class="bp-details">
+              <div class="bp-detail">
+                <label>Fecha</label>
+                <value>Dom 21 Junio 2025</value>
+              </div>
+              <div class="bp-detail">
+                <label>Sale</label>
+                <value>6:55 p.m.</value>
+              </div>
+              <div class="bp-detail">
+                <label>Llega</label>
+                <value>11:35 p.m.</value>
+              </div>
+              <div class="bp-detail">
+                <label>Tarifa</label>
+                <value>Basic</value>
+              </div>
             </div>
           </div>
-          <div class="vuelo-horario">
-            <span>6:55 p.m.</span>
-            <span>11:35 p.m.</span>
-          </div>
-          <div class="vuelo-aerolinea">LATAM Airlines Colombia</div>
-          <div class="vuelo-footer">
-            <div class="vuelo-fecha">Domingo, 21 de junio 2025</div>
-            <div class="vuelo-precio">
-              <div class="precio-label">por pasajero</div>
-              <div class="precio-valor"><span class="precio-moneda">COP </span>243.282</div>
+          <div class="bp-tear"></div>
+          <div class="bp-stub">
+            <div class="bp-stub-top">
+              <label>Pasajeros</label>
+              <value>Brayan & Valeria</value>
+              <label>Aerolínea</label>
+              <value>LATAM Airlines</value>
+              <div class="bp-qr"></div>
+            </div>
+            <div class="bp-precio">
+              <label>Por pasajero</label>
+              <value>COP 243.282</value>
+              <br><small>Tarifa sin reembolso</small>
             </div>
           </div>
         </div>
+
       </div>
 
       <div class="vuelo-total">
-        <div>
-          <p>Total ambos trayectos por pasajero</p>
-          <p class="tarifa-nota">Tarifa Basic · Sin reembolso · Solo bolso de mano</p>
+        <div class="vuelo-total-left">
+          <strong>Total vuelos por pasajero</strong>
+          <p>Ida + regreso · Tarifa Basic · LATAM Airlines Colombia</p>
         </div>
-        <div class="total-valor">COP 480.040</div>
+        <div class="vuelo-total-right">COP 480.040</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRESUPUESTO -->
+  <section id="presupuesto">
+    <div class="container">
+      <div class="s-label">Por persona</div>
+      <h2 class="s-title">Presupuesto</h2>
+      <p class="s-sub">Desglose completo de los 1.300.000 COP por persona, todo incluido.</p>
+
+      <div class="budget-layout">
+        <div class="budget-table">
+          <div class="budget-header">Desglose de gastos</div>
+          <div class="budget-row">
+            <span class="concepto">Vuelos ida + regreso</span>
+            <span class="valor">480.040</span>
+          </div>
+          <div class="budget-row">
+            <span class="concepto">Hospedaje 3 noches (Airbnb entre 2)</span>
+            <span class="valor">180.000</span>
+          </div>
+          <div class="budget-row">
+            <span class="concepto">Comidas (4 días)</span>
+            <span class="valor">200.000</span>
+          </div>
+          <div class="budget-row">
+            <span class="concepto">Transporte local (Uber + buses)</span>
+            <span class="valor">153.000</span>
+          </div>
+          <div class="budget-row">
+            <span class="concepto">Termales Santa Rosa (sábado)</span>
+            <span class="valor">77.000</span>
+          </div>
+          <div class="budget-row">
+            <span class="concepto">Tour finca cafetera</span>
+            <span class="valor">60.000</span>
+          </div>
+          <div class="budget-row">
+            <span class="concepto">Valle del Cocora (miradores)</span>
+            <span class="valor">30.000</span>
+          </div>
+          <div class="budget-row">
+            <span class="concepto">Souvenirs e imprevistos</span>
+            <span class="valor">119.960</span>
+          </div>
+          <div class="budget-row total-row">
+            <span class="concepto">Total por persona</span>
+            <span class="valor">1.300.000</span>
+          </div>
+        </div>
+
+        <div class="budget-visual">
+          <div class="budget-bar-item">
+            <div class="budget-bar-label">
+              <span>Vuelos</span><span>480k — 36.9%</span>
+            </div>
+            <div class="budget-bar-track">
+              <div class="budget-bar-fill" style="width:37%"></div>
+            </div>
+          </div>
+          <div class="budget-bar-item">
+            <div class="budget-bar-label">
+              <span>Hospedaje</span><span>180k — 13.8%</span>
+            </div>
+            <div class="budget-bar-track">
+              <div class="budget-bar-fill" style="width:14%"></div>
+            </div>
+          </div>
+          <div class="budget-bar-item">
+            <div class="budget-bar-label">
+              <span>Comidas</span><span>200k — 15.4%</span>
+            </div>
+            <div class="budget-bar-track">
+              <div class="budget-bar-fill" style="width:15%"></div>
+            </div>
+          </div>
+          <div class="budget-bar-item">
+            <div class="budget-bar-label">
+              <span>Transporte local</span><span>153k — 11.8%</span>
+            </div>
+            <div class="budget-bar-track">
+              <div class="budget-bar-fill" style="width:12%"></div>
+            </div>
+          </div>
+          <div class="budget-bar-item">
+            <div class="budget-bar-label">
+              <span>Termales</span><span>77k — 5.9%</span>
+            </div>
+            <div class="budget-bar-track">
+              <div class="budget-bar-fill" style="width:6%"></div>
+            </div>
+          </div>
+          <div class="budget-bar-item">
+            <div class="budget-bar-label">
+              <span>Actividades</span><span>90k — 6.9%</span>
+            </div>
+            <div class="budget-bar-track">
+              <div class="budget-bar-fill" style="width:7%"></div>
+            </div>
+          </div>
+          <div class="budget-bar-item">
+            <div class="budget-bar-label">
+              <span>Extras</span><span>120k — 9.2%</span>
+            </div>
+            <div class="budget-bar-track">
+              <div class="budget-bar-fill" style="width:9%"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -709,57 +1226,300 @@
   <!-- ITINERARIO -->
   <section id="itinerario">
     <div class="container">
-      <div class="section-label">Plan del viaje</div>
-      <h2 class="section-title">Itinerario</h2>
-      <p class="section-sub">3 noches en el Eje Cafetero para explorar Pereira y sus alrededores.</p>
+      <div class="s-label">18 — 21 Junio</div>
+      <h2 class="s-title">Itinerario</h2>
+      <p class="s-sub">Plan día a día con tiempos de desplazamiento incluidos.</p>
 
-      <div class="itinerario-grid">
-        <div class="dia-card">
-          <div class="dia-numero">01</div>
-          <div class="dia-fecha">Jue 18 Jun — Llegada</div>
-          <div class="dia-titulo">Llegada a Pereira</div>
-          <ul class="dia-actividades">
-            <li>Aterrizaje 1:00 p.m. en PEI</li>
-            <li>Check-in en el hotel</li>
-            <li>Recorrido por el centro historico</li>
-            <li>Cena en restaurante local</li>
-          </ul>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-header">
+            <div class="tl-dia">Día 1</div>
+            <div class="tl-fecha">Jueves 18 de junio</div>
+          </div>
+          <div class="tl-titulo">Llegada a Pereira</div>
+          <div class="tl-grid">
+            <div class="tl-actividad">
+              <span class="icon">✈️</span>
+              <div class="text">
+                <strong>Aterrizaje PEI · 1:00 p.m.</strong>
+                Aeropuerto Matecana, dentro de la ciudad
+                <div class="cost">— gratis</div>
+              </div>
+            </div>
+            <div class="tl-actividad">
+              <span class="icon">🚗</span>
+              <div class="text">
+                <strong>Uber al Airbnb · ~15 min</strong>
+                Zona Pinares o Álamos, segura y central
+                <div class="cost">~18.000 COP</div>
+              </div>
+            </div>
+            <div class="tl-actividad">
+              <span class="icon">🧳</span>
+              <div class="text">
+                <strong>Check-in y descanso · ~2:00 p.m.</strong>
+                Dejar maletas y refrescarse
+                <div class="cost">—</div>
+              </div>
+            </div>
+            <div class="tl-actividad">
+              <span class="icon">🏙️</span>
+              <div class="text">
+                <strong>Centro de Pereira · tarde</strong>
+                Plaza de Bolívar, Viaducto, Parque del Lago
+                <div class="cost">~8.000 Uber</div>
+              </div>
+            </div>
+            <div class="tl-actividad">
+              <span class="icon">🍽️</span>
+              <div class="text">
+                <strong>Cena · ~8:00 p.m.</strong>
+                Restaurante local en el centro
+                <div class="cost">~35.000 COP</div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="dia-card">
-          <div class="dia-numero">02</div>
-          <div class="dia-fecha">Vie 19 Jun — Exploracion</div>
-          <div class="dia-titulo">Salento y el Cocora</div>
-          <ul class="dia-actividades">
-            <li>Excursion al Valle del Cocora</li>
-            <li>Palmas de cera gigantes</li>
-            <li>Pueblo de Salento</li>
-            <li>Cafe de origen</li>
-          </ul>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-header">
+            <div class="tl-dia">Día 2</div>
+            <div class="tl-fecha">Viernes 19 de junio</div>
+          </div>
+          <div class="tl-titulo">Salento & Valle del Cocora</div>
+          <div class="tl-grid">
+            <div class="tl-actividad">
+              <span class="icon">🌅</span>
+              <div class="text">
+                <strong>Desayuno · 7:30 a.m.</strong>
+                En el Airbnb o cafetería cercana
+                <div class="cost">~15.000 COP</div>
+              </div>
+            </div>
+            <div class="tl-actividad">
+              <span class="icon">🚌</span>
+              <div class="text">
+                <strong>Bus a Salento · 8:30 a.m.</strong>
+                Uber a terminal (~10k) + bus directo (~12k). Llegan ~9:45 a.m.
+                <div class="cost">~22.000 COP</div>
+              </div>
+            </div>
+            <div class="tl-actividad">
+              <span class="icon">🏘️</span>
+              <div class="text">
+                <strong>Recorrido Salento · 10:00 a.m.</strong>
+                Pueblo colorido, Alto de la Cruz, tiendas
+                <div class="cost">— gratis</div>
+              </div>
+            </div>
+            <div class="tl-actividad">
+              <span class="icon">🌿</span>
+              <div class="text">
+                <strong>Jeep al Cocora · 12:00 p.m.</strong>
+                15 min hasta el parque. Miradores de palmas de cera
+                <div class="cost">8.000 + 30.000 miradores</div>
+              </div>
+            </div>
+            <div class="tl-actividad">
+              <span class="icon">🥗</span>
+              <div class="text">
+                <strong>Almuerzo en Salento · 3:00 p.m.</strong>
+                De regreso del Cocora, trucha o bandeja
+                <div class="cost">~25.000 COP</div>
+              </div>
+            </div>
+            <div class="tl-actividad">
+              <span class="icon">🚌</span>
+              <div class="text">
+                <strong>Bus de regreso · 5:00 p.m.</strong>
+                Llegan a Pereira ~6:15 p.m.
+                <div class="cost">~12.000 COP</div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="dia-card">
-          <div class="dia-numero">03</div>
-          <div class="dia-fecha">Sab 20 Jun — Naturaleza</div>
-          <div class="dia-titulo">Termales y cafe</div>
-          <ul class="dia-actividades">
-            <li>Visita a finca cafetera</li>
-            <li>Proceso del cafe de la A a la Z</li>
-            <li>Termales Santa Rosa de Cabal</li>
-            <li>Noche en Pereira</li>
-          </ul>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-header">
+            <div class="tl-dia">Día 3</div>
+            <div class="tl-fecha">Sábado 20 de junio</div>
+          </div>
+          <div class="tl-titulo">Tour Cafetero & Termales</div>
+          <div class="tl-grid">
+            <div class="tl-actividad">
+              <span class="icon">☕</span>
+              <div class="text">
+                <strong>Tour finca cafetera · 9:00 a.m.</strong>
+                Recorrido en finca cercana: cosecha, proceso y degustación
+                <div class="cost">~60.000 COP</div>
+              </div>
+            </div>
+            <div class="tl-actividad">
+              <span class="icon">🥘</span>
+              <div class="text">
+                <strong>Almuerzo · 1:00 p.m.</strong>
+                En la finca o de regreso en Pereira
+                <div class="cost">~25.000 COP</div>
+              </div>
+            </div>
+            <div class="tl-actividad">
+              <span class="icon">🚌</span>
+              <div class="text">
+                <strong>Bus a Santa Rosa de Cabal · 3:00 p.m.</strong>
+                30 min en bus + chiva a los termales
+                <div class="cost">~16.000 COP</div>
+              </div>
+            </div>
+            <div class="tl-actividad">
+              <span class="icon">♨️</span>
+              <div class="text">
+                <strong>Termales Santa Rosa · 4:00 p.m.</strong>
+                Aguas termales naturales, turno de tarde
+                <div class="cost">77.000 COP (fin de semana)</div>
+              </div>
+            </div>
+            <div class="tl-actividad">
+              <span class="icon">🌙</span>
+              <div class="text">
+                <strong>Regreso y cena · 8:00 p.m.</strong>
+                Noche libre en Pereira
+                <div class="cost">~30.000 COP</div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="dia-card">
-          <div class="dia-numero">04</div>
-          <div class="dia-fecha">Dom 21 Jun — Regreso</div>
-          <div class="dia-titulo">Ultimo dia</div>
-          <ul class="dia-actividades">
-            <li>Manana libre en Pereira</li>
-            <li>Compras y souvenirs</li>
-            <li>Check-out del hotel</li>
-            <li>Vuelo 6:55 p.m. de regreso</li>
-          </ul>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-header">
+            <div class="tl-dia">Día 4</div>
+            <div class="tl-fecha">Domingo 21 de junio</div>
+          </div>
+          <div class="tl-titulo">Último día & Regreso</div>
+          <div class="tl-grid">
+            <div class="tl-actividad">
+              <span class="icon">🌄</span>
+              <div class="text">
+                <strong>Mañana libre · 9:00 a.m.</strong>
+                Desayuno tranquilo, mercado de artesanías
+                <div class="cost">~20.000 COP</div>
+              </div>
+            </div>
+            <div class="tl-actividad">
+              <span class="icon">🛍️</span>
+              <div class="text">
+                <strong>Souvenirs · 11:00 a.m.</strong>
+                Café de origen, artesanías, recuerdos
+                <div class="cost">40.000 COP</div>
+              </div>
+            </div>
+            <div class="tl-actividad">
+              <span class="icon">🧳</span>
+              <div class="text">
+                <strong>Check-out · 1:00 p.m.</strong>
+                Dejar el Airbnb
+                <div class="cost">—</div>
+              </div>
+            </div>
+            <div class="tl-actividad">
+              <span class="icon">🚗</span>
+              <div class="text">
+                <strong>Uber al aeropuerto · 4:30 p.m.</strong>
+                PEI a 15 min del centro. Estar 2h antes
+                <div class="cost">~18.000 COP</div>
+              </div>
+            </div>
+            <div class="tl-actividad">
+              <span class="icon">✈️</span>
+              <div class="text">
+                <strong>Vuelo de regreso · 6:55 p.m.</strong>
+                PEI → CTG · llegan 11:35 p.m.
+                <div class="cost">—</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- LUGARES -->
+  <section id="lugares">
+    <div class="container">
+      <div class="s-label">Eje Cafetero</div>
+      <h2 class="s-title">Qué visitar</h2>
+      <p class="s-sub">Los mejores lugares del itinerario y por qué valen la pena.</p>
+
+      <div class="lugares-grid">
+        <div class="lugar-card">
+          <div class="lugar-img">
+            <img src="https://images.unsplash.com/photo-1596803244618-8dbf9a49d4d4?w=600&q=80&fit=crop" alt="Valle del Cocora" loading="lazy" />
+          </div>
+          <div class="lugar-body">
+            <div class="lugar-tag">Viernes · Quindío</div>
+            <h3>Valle del Cocora</h3>
+            <p>Hogar de las palmas de cera más altas del mundo, el árbol nacional de Colombia. Paisaje único e irreal.</p>
+          </div>
+        </div>
+
+        <div class="lugar-card">
+          <div class="lugar-img">
+            <img src="https://images.unsplash.com/photo-1583597805681-b7b1f34b7f37?w=600&q=80&fit=crop" alt="Salento" loading="lazy" />
+          </div>
+          <div class="lugar-body">
+            <div class="lugar-tag">Viernes · Quindío</div>
+            <h3>Pueblo de Salento</h3>
+            <p>El pueblo más colorido del Eje Cafetero. Casas coloniales, tiendas de artesanías y el mejor café de origen.</p>
+          </div>
+        </div>
+
+        <div class="lugar-card">
+          <div class="lugar-img">
+            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80&fit=crop" alt="Cafe colombiano" loading="lazy" />
+          </div>
+          <div class="lugar-body">
+            <div class="lugar-tag">Sábado · Risaralda</div>
+            <h3>Finca Cafetera</h3>
+            <p>Aprende todo el proceso del café, desde la cerecita en la planta hasta la taza. Una experiencia única.</p>
+          </div>
+        </div>
+
+        <div class="lugar-card">
+          <div class="lugar-img">
+            <img src="https://images.unsplash.com/photo-1571401835393-8c5f35328320?w=600&q=80&fit=crop" alt="Termales Colombia" loading="lazy" />
+          </div>
+          <div class="lugar-body">
+            <div class="lugar-tag">Sábado · Santa Rosa</div>
+            <h3>Termales Santa Rosa</h3>
+            <p>Aguas termales naturales entre montañas y cascadas. El plan perfecto para el sábado por la tarde.</p>
+          </div>
+        </div>
+
+        <div class="lugar-card">
+          <div class="lugar-img">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop" alt="Pereira ciudad" loading="lazy" />
+          </div>
+          <div class="lugar-body">
+            <div class="lugar-tag">Jueves · Risaralda</div>
+            <h3>Centro de Pereira</h3>
+            <p>El Viaducto César Gaviria, la Plaza de Bolívar y el Parque del Lago. Primera impresión de la ciudad.</p>
+          </div>
+        </div>
+
+        <div class="lugar-card">
+          <div class="lugar-img">
+            <img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=600&q=80&fit=crop" alt="Artesanias Colombia" loading="lazy" />
+          </div>
+          <div class="lugar-body">
+            <div class="lugar-tag">Domingo · Pereira</div>
+            <h3>Mercado de artesanías</h3>
+            <p>Café de origen, tejidos, recuerdos del Eje Cafetero. El mejor lugar para los souvenirs del último día.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -768,79 +1528,55 @@
   <!-- UBICACION -->
   <section id="ubicacion">
     <div class="container">
-      <div class="section-label">Colombia</div>
-      <h2 class="section-title">Donde queda Pereira</h2>
-      <p class="section-sub">Capital del departamento de Risaralda, en el corazon del Eje Cafetero colombiano.</p>
+      <div class="s-label">Colombia · Risaralda</div>
+      <h2 class="s-title">Dónde queda</h2>
+      <p class="s-sub">Pereira, capital del Eje Cafetero, en el corazón de los Andes colombianos.</p>
 
       <div class="mapa-layout">
-        <div class="mapa-info">
-          <div class="mapa-dato">
-            <strong>Region</strong>
-            <p>Eje Cafetero — Departamento de Risaralda</p>
-          </div>
-          <div class="mapa-dato">
-            <strong>Cercano a</strong>
-            <p>Medellin (2h), Manizales (1h), Armenia (45min), Salento (1h)</p>
-          </div>
-          <div class="mapa-dato">
-            <strong>Clima</strong>
-            <p>Templado andino, 22 °C promedio. Perfecta todo el ano.</p>
-          </div>
-          <div class="mapa-dato">
-            <strong>Aeropuerto</strong>
-            <p>Aeropuerto Internacional Matecana (PEI)</p>
-          </div>
-        </div>
-
-        <div class="mapa-img">
+        <div class="mapa-wrap">
           <img src="imagen-mapa.png" alt="Mapa de Colombia con Pereira en el Eje Cafetero" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- QUE VISITAR -->
-  <section id="pereira">
-    <div class="container">
-      <div class="section-label">Destinos recomendados</div>
-      <h2 class="section-title">Que visitar</h2>
-      <p class="section-sub">Lo mejor de Pereira y el Eje Cafetero para aprovechar al maximo el fin de semana.</p>
-
-      <div class="lugares-grid">
-        <div class="lugar-card">
-          <div class="lugar-icon" style="background:#E8F5E9;">🌿</div>
-          <h3>Valle del Cocora</h3>
-          <p>Paisaje emblematico con las palmas de cera mas altas del mundo. Excursion imperdible desde Salento.</p>
+          <div class="mapa-badge">
+            <strong>Pereira · PEI</strong>
+            <span>Departamento de Risaralda</span>
+          </div>
         </div>
 
-        <div class="lugar-card">
-          <div class="lugar-icon" style="background:#FFF8E1;">☕</div>
-          <h3>Fincas cafeteras</h3>
-          <p>Tours guiados por fincas donde se cultiva el mejor cafe del mundo. Aprendes todo el proceso y degustas.</p>
-        </div>
-
-        <div class="lugar-card">
-          <div class="lugar-icon" style="background:#E3F2FD;">♨️</div>
-          <h3>Termales Santa Rosa</h3>
-          <p>Aguas termales naturales a 40 minutos de Pereira. Relajacion total en medio de la montana.</p>
-        </div>
-
-        <div class="lugar-card">
-          <div class="lugar-icon" style="background:#FCE4EC;">🏘️</div>
-          <h3>Pueblo de Salento</h3>
-          <p>El pueblo mas colorido del Eje Cafetero. Arquitectura colonial, tiendas de artesanias y el mejor paisaje.</p>
-        </div>
-
-        <div class="lugar-card">
-          <div class="lugar-icon" style="background:#F3E5F5;">🌆</div>
-          <h3>Centro de Pereira</h3>
-          <p>La Plaza de Bolivar, el Viaducto y el Parque del Lago son paradas obligadas al llegar a la ciudad.</p>
-        </div>
-
-        <div class="lugar-card">
-          <div class="lugar-icon" style="background:#E0F7FA;">🐦</div>
-          <h3>Observacion de aves</h3>
-          <p>El Eje Cafetero es paraiso del avistamiento. Mas de 500 especies registradas en la region.</p>
+        <div class="mapa-datos">
+          <div class="mapa-dato">
+            <div class="mapa-dato-icon">📍</div>
+            <div>
+              <label>Región</label>
+              <p>Eje Cafetero · Departamento de Risaralda · 1.411 m.s.n.m.</p>
+            </div>
+          </div>
+          <div class="mapa-dato">
+            <div class="mapa-dato-icon">✈️</div>
+            <div>
+              <label>Aeropuerto</label>
+              <p>Matecana Internacional (PEI) — ubicado dentro de la ciudad, 15 min al centro</p>
+            </div>
+          </div>
+          <div class="mapa-dato">
+            <div class="mapa-dato-icon">🌡️</div>
+            <div>
+              <label>Clima en junio</label>
+              <p>Templado andino, 18–25 °C. Puede llover en las tardes. Llevar capa ligera.</p>
+            </div>
+          </div>
+          <div class="mapa-dato">
+            <div class="mapa-dato-icon">📍</div>
+            <div>
+              <label>Distancias clave</label>
+              <p>Salento 1h · Santa Rosa de Cabal 30 min · Manizales 1h · Armenia 45 min</p>
+            </div>
+          </div>
+          <div class="mapa-dato">
+            <div class="mapa-dato-icon">💡</div>
+            <div>
+              <label>Tip de viaje</label>
+              <p>El Airbnb en zona Pinares o Álamos es seguro, tiene buena conexión y está cerca de restaurantes.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -848,7 +1584,8 @@
 
   <!-- FOOTER -->
   <footer>
-    <p>Viaje a <strong>Pereira</strong> — 18 al 21 de junio 2025 · LATAM Airlines · Eje Cafetero, Colombia</p>
+    <div class="footer-title">De la Costa al Café</div>
+    <p>Brayan & Valeria · Cartagena → Pereira · 18–21 Junio 2025</p>
   </footer>
 
 </body>
