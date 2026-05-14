@@ -1168,6 +1168,86 @@
       letter-spacing: 1px;
     }
 
+    /* ── AVION ANIMADO ── */
+    .plane-fly {
+      position: fixed;
+      top: 18%;
+      left: 108vw;
+      z-index: 49;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      animation: planeFly 32s linear infinite;
+      animation-delay: 5s;
+    }
+
+    .plane-emoji {
+      font-size: 2rem;
+      transform: scaleX(-1);
+      filter: drop-shadow(0 0 14px rgba(255,107,53,0.9));
+      display: inline-block;
+    }
+
+    .plane-contrail {
+      width: 110px;
+      height: 2px;
+      background: linear-gradient(to right, transparent, rgba(255,107,53,0.35), rgba(199,125,255,0.2));
+      margin-left: -3px;
+    }
+
+    @keyframes planeFly {
+      0%   { transform: translateX(0)      translateY(0);    opacity: 0; }
+      4%   { opacity: 1; }
+      50%  { transform: translateX(-60vw)  translateY(-35px); opacity: 1; }
+      95%  { opacity: 0.8; }
+      99%  { opacity: 0; }
+      100% { transform: translateX(-130vw) translateY(-50px); opacity: 0; }
+    }
+
+    /* ── ITINERARIO ACORDEÓN ── */
+    details.tl-right { cursor: default; }
+    details.tl-right summary {
+      list-style: none;
+      cursor: pointer;
+      outline: none;
+    }
+    details.tl-right summary::-webkit-details-marker { display: none; }
+
+    .tl-summary-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .tl-toggle {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,107,53,0.3);
+      background: rgba(255,107,53,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: var(--orange);
+      transition: transform 0.3s, background 0.2s;
+      flex-shrink: 0;
+    }
+
+    details[open] .tl-toggle {
+      transform: rotate(180deg);
+      background: rgba(255,107,53,0.18);
+    }
+
+    details[open] .tl-cards {
+      animation: slideDown 0.35s ease forwards;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr; padding-top: 6rem; }
@@ -1191,6 +1271,12 @@
   </style>
 </head>
 <body>
+
+  <!-- AVION VOLANDO -->
+  <div class="plane-fly" aria-hidden="true">
+    <div class="plane-contrail"></div>
+    <span class="plane-emoji">✈</span>
+  </div>
 
   <!-- NAV -->
   <nav>
@@ -1643,12 +1729,17 @@
             <div class="tl-num">01</div>
             <div class="tl-dayname">Jue</div>
           </div>
-          <div class="tl-right">
-            <div class="tl-header">
-              <div class="tl-badge">Día 1</div>
-              <div class="tl-fecha">Jueves 18 de junio · Llegada</div>
-            </div>
-            <div class="tl-title">Bienvenidos a Pereira</div>
+          <details class="tl-right" open>
+            <summary class="tl-summary">
+              <div class="tl-summary-row">
+                <div class="tl-header">
+                  <div class="tl-badge">Día 1</div>
+                  <div class="tl-fecha">Jueves 18 de junio · Llegada</div>
+                </div>
+                <div class="tl-toggle">▼</div>
+              </div>
+              <div class="tl-title">Bienvenidos a Pereira</div>
+            </summary>
             <div class="tl-cards">
               <div class="tl-card"><span class="tl-card-icon">✈️</span><div class="tl-card-body"><strong>Aterrizaje 1:00 p.m.</strong><p>Aeropuerto Matecana, dentro de la ciudad</p><div class="tl-card-cost">— incluido</div></div></div>
               <div class="tl-card"><span class="tl-card-icon">🚗</span><div class="tl-card-body"><strong>Uber al Airbnb · 15 min</strong><p>Zona Pinares o Álamos</p><div class="tl-card-cost">~18.000 COP</div></div></div>
@@ -1664,12 +1755,17 @@
             <div class="tl-num">02</div>
             <div class="tl-dayname">Vie</div>
           </div>
-          <div class="tl-right">
-            <div class="tl-header">
-              <div class="tl-badge">Día 2</div>
-              <div class="tl-fecha">Viernes 19 de junio · Excursión</div>
-            </div>
-            <div class="tl-title">Salento & Valle del Cocora</div>
+          <details class="tl-right">
+            <summary class="tl-summary">
+              <div class="tl-summary-row">
+                <div class="tl-header">
+                  <div class="tl-badge">Día 2</div>
+                  <div class="tl-fecha">Viernes 19 de junio · Excursión</div>
+                </div>
+                <div class="tl-toggle">▼</div>
+              </div>
+              <div class="tl-title">Salento & Valle del Cocora</div>
+            </summary>
             <div class="tl-cards">
               <div class="tl-card"><span class="tl-card-icon">🌅</span><div class="tl-card-body"><strong>Desayuno · 7:30 a.m.</strong><p>Antes de salir al terminal</p><div class="tl-card-cost">~15.000 COP</div></div></div>
               <div class="tl-card"><span class="tl-card-icon">🚌</span><div class="tl-card-body"><strong>Bus a Salento · 8:30 a.m.</strong><p>Uber terminal (~10k) + bus directo. Llegan ~9:45</p><div class="tl-card-cost">~22.000 COP</div></div></div>
@@ -1678,7 +1774,7 @@
               <div class="tl-card"><span class="tl-card-icon">🥗</span><div class="tl-card-body"><strong>Almuerzo en Salento · 3:00 p.m.</strong><p>Trucha, bandeja paisa o sancocho</p><div class="tl-card-cost">~25.000 COP</div></div></div>
               <div class="tl-card"><span class="tl-card-icon">🚌</span><div class="tl-card-body"><strong>Bus de regreso · 5:00 p.m.</strong><p>Llegan a Pereira ~6:15 p.m.</p><div class="tl-card-cost">~12.000 COP</div></div></div>
             </div>
-          </div>
+          </details>
         </div>
 
         <div class="tl-item">
@@ -1686,12 +1782,17 @@
             <div class="tl-num">03</div>
             <div class="tl-dayname">Sáb</div>
           </div>
-          <div class="tl-right">
-            <div class="tl-header">
-              <div class="tl-badge">Día 3</div>
-              <div class="tl-fecha">Sábado 20 de junio · Café & Relax</div>
-            </div>
-            <div class="tl-title">Tour Cafetero & Termales</div>
+          <details class="tl-right">
+            <summary class="tl-summary">
+              <div class="tl-summary-row">
+                <div class="tl-header">
+                  <div class="tl-badge">Día 3</div>
+                  <div class="tl-fecha">Sábado 20 de junio · Café & Relax</div>
+                </div>
+                <div class="tl-toggle">▼</div>
+              </div>
+              <div class="tl-title">Tour Cafetero & Termales</div>
+            </summary>
             <div class="tl-cards">
               <div class="tl-card"><span class="tl-card-icon">☕</span><div class="tl-card-body"><strong>Tour finca cafetera · 9:00 a.m.</strong><p>Cosecha, proceso y degustación del café</p><div class="tl-card-cost">~60.000 COP</div></div></div>
               <div class="tl-card"><span class="tl-card-icon">🥘</span><div class="tl-card-body"><strong>Almuerzo · 1:00 p.m.</strong><p>En la finca o de regreso a Pereira</p><div class="tl-card-cost">~25.000 COP</div></div></div>
@@ -1699,7 +1800,7 @@
               <div class="tl-card"><span class="tl-card-icon">♨️</span><div class="tl-card-body"><strong>Termales · 4:00 p.m.</strong><p>Aguas termales naturales, turno de tarde</p><div class="tl-card-cost">77.000 COP (fin de semana)</div></div></div>
               <div class="tl-card"><span class="tl-card-icon">🌙</span><div class="tl-card-body"><strong>Regreso y cena · 8:00 p.m.</strong><p>Última noche en Pereira</p><div class="tl-card-cost">~30.000 COP</div></div></div>
             </div>
-          </div>
+          </details>
         </div>
 
         <div class="tl-item">
@@ -1707,12 +1808,17 @@
             <div class="tl-num">04</div>
             <div class="tl-dayname">Dom</div>
           </div>
-          <div class="tl-right">
-            <div class="tl-header">
-              <div class="tl-badge">Día 4</div>
-              <div class="tl-fecha">Domingo 21 de junio · Regreso</div>
-            </div>
-            <div class="tl-title">Último día, de vuelta a casa</div>
+          <details class="tl-right">
+            <summary class="tl-summary">
+              <div class="tl-summary-row">
+                <div class="tl-header">
+                  <div class="tl-badge">Día 4</div>
+                  <div class="tl-fecha">Domingo 21 de junio · Regreso</div>
+                </div>
+                <div class="tl-toggle">▼</div>
+              </div>
+              <div class="tl-title">Último día, de vuelta a casa</div>
+            </summary>
             <div class="tl-cards">
               <div class="tl-card"><span class="tl-card-icon">🌄</span><div class="tl-card-body"><strong>Mañana libre · 9:00 a.m.</strong><p>Desayuno, mercado de artesanías</p><div class="tl-card-cost">~20.000 COP</div></div></div>
               <div class="tl-card"><span class="tl-card-icon">🛍️</span><div class="tl-card-body"><strong>Souvenirs · 11:00 a.m.</strong><p>Café de origen, tejidos, recuerdos</p><div class="tl-card-cost">~40.000 COP</div></div></div>
@@ -1720,7 +1826,7 @@
               <div class="tl-card"><span class="tl-card-icon">🚗</span><div class="tl-card-body"><strong>Uber al aeropuerto · 4:30 p.m.</strong><p>PEI a 15 min del centro. 2h antes</p><div class="tl-card-cost">~18.000 COP</div></div></div>
               <div class="tl-card"><span class="tl-card-icon">✈️</span><div class="tl-card-body"><strong>Vuelo regreso · 6:55 p.m.</strong><p>PEI → CTG · Llegan 11:35 p.m.</p><div class="tl-card-cost">— incluido</div></div></div>
             </div>
-          </div>
+          </details>
         </div>
 
       </div>
@@ -1737,7 +1843,7 @@
       <div class="lugares-featured">
         <div class="lugar-card featured">
           <div class="lugar-img">
-            <img src="https://images.unsplash.com/photo-1596803244618-8dbf9a49d4d4?w=800&q=80&fit=crop" alt="Valle del Cocora" loading="lazy"/>
+            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80&fit=crop" alt="Valle del Cocora" loading="lazy"/>
             <div class="lugar-img-overlay"></div>
           </div>
           <div class="lugar-body">
@@ -1749,7 +1855,7 @@
 
         <div class="lugar-card">
           <div class="lugar-img">
-            <img src="https://images.unsplash.com/photo-1583597805681-b7b1f34b7f37?w=600&q=80&fit=crop" alt="Salento" loading="lazy"/>
+            <img src="https://images.unsplash.com/photo-1534430480872-3498386e7856?w=600&q=80&fit=crop" alt="Salento" loading="lazy"/>
             <div class="lugar-img-overlay"></div>
           </div>
           <div class="lugar-body">
@@ -1760,7 +1866,7 @@
 
         <div class="lugar-card">
           <div class="lugar-img">
-            <img src="https://images.unsplash.com/photo-1571401835393-8c5f35328320?w=600&q=80&fit=crop" alt="Termales" loading="lazy"/>
+            <img src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=600&q=80&fit=crop" alt="Termales" loading="lazy"/>
             <div class="lugar-img-overlay"></div>
           </div>
           <div class="lugar-body">
@@ -1784,7 +1890,7 @@
 
         <div class="lugar-card">
           <div class="lugar-img">
-            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80&fit=crop" alt="Centro Pereira" loading="lazy"/>
+            <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=400&q=80&fit=crop" alt="Centro Pereira" loading="lazy"/>
             <div class="lugar-img-overlay"></div>
           </div>
           <div class="lugar-body">
@@ -1795,7 +1901,7 @@
 
         <div class="lugar-card">
           <div class="lugar-img">
-            <img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=400&q=80&fit=crop" alt="Artesanias" loading="lazy"/>
+            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&q=80&fit=crop" alt="Artesanias" loading="lazy"/>
             <div class="lugar-img-overlay"></div>
           </div>
           <div class="lugar-body">
@@ -1806,7 +1912,7 @@
 
         <div class="lugar-card">
           <div class="lugar-img">
-            <img src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=400&q=80&fit=crop" alt="Colombia montanas" loading="lazy"/>
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80&fit=crop" alt="Colombia montanas" loading="lazy"/>
             <div class="lugar-img-overlay"></div>
           </div>
           <div class="lugar-body">
